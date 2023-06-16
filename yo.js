@@ -466,7 +466,14 @@ function yo_get(url, body, callback) {
             }
             else {
                 callback({}, '');
-                alert("Не найдено =(");
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                setTimeout(function(){ 
+				    x.className = x.className.replace("show", "");
+				}, 2000);
+                setTimeout(function(){
+                    location.replace('https://olegsvs.github.io/4h0y2.github.io');
+                }, 2000);
             }
         }
     };
