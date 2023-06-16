@@ -466,6 +466,7 @@ function yo_get(url, body, callback) {
             }
             else {
                 callback({}, '');
+                alert("Не найдено =(");
             }
         }
     };
