@@ -368,6 +368,12 @@ function yo(self) {
             if (j < 1) {
                 var yohohoLoading = document.querySelector('#yohoho-loading');
                 yohohoLoading.style.display = 'none';
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                setTimeout(function(){
+                    x.className = x.className.replace("show", "");
+                    location.replace('https://olegsvs.github.io/4h0y2.github.io');
+                }, 2000);
             }
             else if (j > 1) {
                 yohoho.appendChild(buttons);
