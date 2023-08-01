@@ -315,8 +315,36 @@
     });
 </script>
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var search = document.querySelector('#search');
+        var title = document.querySelector('#search-title');
+        window.onhashchange = function() {
+            location.reload()
+        }
+        if (window.location.hash) {
+            var hash = window.location.hash.substring(1);
+            if (title && hash) {
+                title.value = decodeURIComponent(hash);
+                parse();
+            }
+        }
 
-    $('#search-title').autocomplete({
+        if (search) {
+            search.addEventListener('click', function () {
+                return parse();
+            });
+        }
+
+        if (title) {
+            title.addEventListener('keyup', function (event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    return parse();
+                }
+            });
+        }
+
+        $('#search-title').autocomplete({
             type: "GET",
             minLength: 3,
             delay: 500,
@@ -341,42 +369,16 @@
                     });
             },                
             select: function (event, ui) { 
-                var yohoho = document.querySelector('#yohoho');
-                if (yohoho) {
-                    yohoho.dataset.title = encodeURIComponent(ui.item.label);
-                    window.location.hash = '#' + ui.item.value;
-                    document.title = ui.item.label;
-                    items = [];
-                    return yo();
-                } 
+                window.location.hash = '#' + ui.item.value;
+                if (window.location.hash) {
+                    var hash = window.location.hash.substring(1);
+                    if (title && hash) {
+                        title.value = decodeURIComponent(hash);
+                        parse();
+                    }
+                }
             }               
         });
-    document.addEventListener('DOMContentLoaded', function () {
-        var search = document.querySelector('#search');
-        var title = document.querySelector('#search-title');
-
-        if (window.location.hash) {
-            var hash = window.location.hash.substring(1);
-            if (title && hash) {
-                title.value = decodeURIComponent(hash);
-                parse();
-            }
-        }
-
-        if (search) {
-            search.addEventListener('click', function () {
-                return parse();
-            });
-        }
-
-        if (title) {
-            title.addEventListener('keyup', function (event) {
-                event.preventDefault();
-                if (event.keyCode === 13) {
-                    return parse();
-                }
-            });
-        }
 
         function parse() {
             var yohoho = document.querySelector('#yohoho');
