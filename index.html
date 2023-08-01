@@ -289,6 +289,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script>
     WebFont.load({
         google: {
@@ -297,6 +301,41 @@
     });
 </script>
 <script>
+
+    $('#search-title').autocomplete({
+            type: "GET",
+            minLength: 3,
+            source : function (request, response) 
+            {                        
+                var search_string = document.getElementById('search-title').value
+                var source_url = "http://5.45.82.118:8099/search/" + search_string;
+
+                $.ajax({
+                    url: source_url,
+                    dataType: "json",
+                    data: request,
+                    success: function (data) {
+                        response($.map(data, function (c) {
+                        return {
+                            label: c.title,
+                            value: c.id
+                        };
+                    }));
+                    },
+                    error : function (a,b,c) { console.log(a) }
+                    });
+            },                
+            select: function (event, ui) { 
+                var yohoho = document.querySelector('#yohoho');
+                if (yohoho) {
+                    yohoho.dataset.title = encodeURIComponent(ui.item.label);
+                    window.location.hash = '#' + ui.item.value;
+                    document.title = ui.item.label;
+                    items = [];
+                    return yo();
+                } 
+            }               
+        });
     document.addEventListener('DOMContentLoaded', function () {
         var search = document.querySelector('#search');
         var title = document.querySelector('#search-title');
