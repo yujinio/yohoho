@@ -220,18 +220,6 @@
         :-moz-placeholder {
             color: #999;
         }
-        .kinopoisk:hover {
-            text-shadow: 1px 1px 2px transparent,0 0 1em yellow;
-            background: -webkit-linear-gradient(315deg, #f50 69.91%, #d6bb00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .home:hover {
-            text-shadow: 1px 1px 2px transparent,0 0 1em yellow;
-            background: -webkit-linear-gradient(315deg, #f50 69.91%, #d6bb00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
         #snackbar {
             visibility: hidden;
             min-width: 250px;
@@ -269,7 +257,13 @@
             background: #6693bc !important;
             border-color: #6693bc !important;
             margin: none;
-        } 
+        }
+        .kinopoisk:hover {
+            text-shadow: 1px 1px 2px transparent,0 0 1em yellow;
+            background: -webkit-linear-gradient(315deg, #f50 69.91%, #d6bb00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 
 </head>
@@ -287,7 +281,7 @@
                 <span class="sr-only">Навигация</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand home" href="/" target="_blank">Just mirror by SentryWard</a>
+            <a class="navbar-brand" href="/" target="_blank">Just mirror by SentryWard</a>
             <a id="kinopoisk" class="navbar-brand kinopoisk" href="https://www.kinopoisk.ru/" target="_blank">КиноПоиск</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
