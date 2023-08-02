@@ -309,6 +309,7 @@
 
         .ui-menu img {
             max-height: 96px;
+            max-width: 64px;
         }
 
         .ui-menu li span {
@@ -441,13 +442,11 @@
                         dataType: "json",
                         data: request,
                         success: function (data) {
-                            if (data.length == 0) {
-                                data = [{
-                                    title: search_string,
-                                    id: search_string,
-                                    poster: 'https://fakeimg.pl/64x96/000000/000000',
-                                }]
-                            }
+                            data.push({
+                                title: 'Поиск не в кинопоиске',
+                                id: search_string,
+                                poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
+                            })
                             response($.map(data, function (c) {
                                 var poster;
                                 if (c.hasOwnProperty('poster')) {
