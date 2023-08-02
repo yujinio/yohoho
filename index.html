@@ -441,6 +441,13 @@
                         dataType: "json",
                         data: request,
                         success: function (data) {
+                            if (data.length == 0) {
+                                data = [{
+                                    title: search_string,
+                                    id: search_string,
+                                    poster: 'https://fakeimg.pl/64x96/000000/000000',
+                                }]
+                            }
                             response($.map(data, function (c) {
                                 var poster;
                                 if (c.hasOwnProperty('poster')) {
@@ -448,13 +455,13 @@
                                 } else {
                                     poster = 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/1227434.jpg'
                                 }
-                                console.log(poster)
                                 return {
                                     label: c.title,
                                     value: c.id,
                                     img: poster,
                                 };
                             }));
+
                         },
                         error: function (a, b, c) { console.log(a) }
                     });
