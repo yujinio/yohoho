@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Yohoho - плееры и торренты для киносайта онлайн кинотеатра</title>
-    <meta name="description" content="Где взять плеер для киносайта? Как вставить embed-код в онлайн кинотеатр? Найти iframe плееры сериалов и тв-передач с автоматическим обновлением?">
+    <meta name="description"
+        content="Где взять плеер для киносайта? Как вставить embed-код в онлайн кинотеатр? Найти iframe плееры сериалов и тв-передач с автоматическим обновлением?">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/icons/favicon-32x32.png" sizes="32x32">
@@ -18,7 +20,8 @@
     <meta name="application-name" content="Yohoho">
     <meta name="theme-color" content="#2a3440">
 
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
     <style>
         .index,
@@ -31,18 +34,22 @@
             margin: 50px auto 60px;
             font-size: 14px;
         }
+
         .index,
         .play {
             overflow: hidden;
         }
+
         .online {
             overflow-x: hidden;
         }
+
         .play,
         .play iframe,
         .play .col-xs-12 {
             width: 100%;
         }
+
         .play,
         .play iframe,
         .play .col-xs-12,
@@ -56,33 +63,41 @@
             padding: 0;
             border: 0;
         }
+
         a {
             text-decoration: none;
             outline: none;
         }
+
         a .disabled {
             pointer-events: none;
             cursor: default;
         }
+
         .navbar {
             z-index: 3;
             border: 0;
         }
+
         .navbar-inverse {
             background: #27313e;
         }
+
         .navbar-inverse .navbar-brand {
             font-weight: 700;
             text-shadow: 1px 1px 2px #000, 0 0 1em #5bb8cc;
             font-size: 20px;
         }
+
         .navbar-inverse .navbar-brand:first-letter {
             text-transform: uppercase;
         }
+
         .navbar-inverse .navbar-toggle:focus,
         .navbar-inverse .navbar-toggle:hover {
             background-color: #232c36;
         }
+
         .footer {
             z-index: 3;
             position: absolute;
@@ -91,12 +106,15 @@
             height: 50px;
             background-color: #27313e;
         }
+
         .container .text-muted {
             margin: 15px 0;
         }
+
         .container .text-muted span {
             color: #ccc;
         }
+
         .index-background {
             position: absolute;
             z-index: 2;
@@ -107,10 +125,12 @@
             background: #2a3440;
             opacity: 0.6;
         }
+
         .index-seo {
             color: #999;
             text-align: justify;
         }
+
         .search-line {
             z-index: 3;
             position: absolute !important;
@@ -120,6 +140,7 @@
             margin-top: -100px !important;
             width: 650px;
         }
+
         .search-line .brand {
             color: #fff;
             font-size: 70px;
@@ -128,14 +149,17 @@
             text-align: center;
             text-shadow: 1px 1px 2px #000, 0 0 1em #5bb8cc;
         }
+
         .search-line .brand:first-letter {
             text-transform: uppercase;
         }
+
         .search-line .form {
             margin: 20px auto;
             width: 100%;
             text-align: center;
         }
+
         .search-line .form input,
         .moderator input,
         .moderator textarea,
@@ -148,6 +172,7 @@
             margin: 30px auto 0;
             font-size: 16px;
         }
+
         .search-line input:hover,
         .moderator input:hover,
         .moderator textarea:hover,
@@ -155,19 +180,23 @@
             border: 2px #27313e solid;
             background: #2f3a46;
         }
+
         a {
             color: #fff;
         }
+
         a:hover {
             color: #fff;
             text-decoration: none;
             outline: none;
         }
+
         a:focus {
             color: #ccc;
             text-decoration: none;
             outline: none;
         }
+
         .player .buttons {
             position: absolute;
             bottom: 0;
@@ -176,31 +205,39 @@
             z-index: 1;
             opacity: 0.6;
         }
+
         .player .buttons:hover {
             opacity: 0.9;
         }
+
         .player .title {
             margin: 7px 10px 0;
         }
+
         .player .translate,
         .player .seasons {
             margin: 0 10px;
         }
+
         .btn {
             border-radius: 0 !important;
             background: rgba(0, 0, 0, 0.4) !important;
             padding: 6px 0 !important;
             overflow: hidden;
         }
+
         .btn-group-justified .btn-group {
             padding: 2px !important;
         }
+
         @media only screen and (max-width: 768px) {
+
             .footer,
             .navbar,
             .index-seo {
                 display: none;
             }
+
             .search-line {
                 left: 0;
                 top: 0;
@@ -208,18 +245,23 @@
                 width: 100%;
             }
         }
+
         ::-webkit-input-placeholder {
             color: #999;
         }
+
         ::-moz-placeholder {
             color: #999;
         }
+
         :-ms-input-placeholder {
             color: #999;
         }
+
         :-moz-placeholder {
             color: #999;
         }
+
         #snackbar {
             visibility: hidden;
             min-width: 250px;
@@ -235,34 +277,49 @@
             bottom: 50%;
             font-size: 30px;
         }
+
         #snackbar.show {
             visibility: visible;
         }
-        .ui-menu
-        {
+
+        .ui-menu {
             color: white;
             border-radius: 5px;
             background-color: #2a3440;
             line-height: 200%;
             font-size: 18px;
         }
-        .ui-menu .ui-menu-item
-        {
+
+        .ui-menu .ui-menu-item {
             color: white;
             background-color: #2a3440;
             margin: none;
         }
+
         .ui-menu-item .ui-menu-item-wrapper.ui-state-active {
             color: white;
             background: #6693bc !important;
             border-color: #6693bc !important;
             margin: none;
         }
+
         #search-title.ui-autocomplete-loading {
             background: #2a3440 url("icons/loadspinner.gif") center no-repeat;
         }
+
+        .ui-menu img {
+            max-height: 96px;
+        }
+
+        .ui-menu li span {
+            font-size: 1em;
+            padding: 0 0 10px 10px;
+            margin: 0 0 10px 0 !important;
+            white-space: nowrap;
+        }
+
         .kinopoisk:hover {
-            text-shadow: 1px 1px 2px transparent,0 0 1em yellow;
+            text-shadow: 1px 1px 2px transparent, 0 0 1em yellow;
             background: -webkit-linear-gradient(315deg, #f50 69.91%, #d6bb00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -270,171 +327,193 @@
     </style>
 
 </head>
+
 <body class="index">
-<div id="snackbar">Не найдено =(</div>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a class="navbar-brand home" href="https://olegsvs.github.io/4h0y2.github.io/">Home</a>
-                </li>
-            </ul>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Навигация</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/" target="_blank">Just mirror by SentryWard</a>
-            <a id="kinopoisk" class="navbar-brand kinopoisk" href="https://www.kinopoisk.ru/" target="_blank">КиноПоиск</a>
+    <div id="snackbar">Не найдено =(</div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a class="navbar-brand home" href="https://olegsvs.github.io/4h0y2.github.io/">Home</a>
+                    </li>
+                </ul>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Навигация</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" target="_blank">Just mirror by SentryWard</a>
+                <a id="kinopoisk" class="navbar-brand kinopoisk" href="https://www.kinopoisk.ru/"
+                    target="_blank">КиноПоиск</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="https://github.com/4h0y/4h0y.github.io" target="_blank">Creator's GitHub</a>
+                    </li>
+                    <li>
+                        <a href="https://gitlab.com/4h0y/4h0y.gitlab.io" target="_blank">Creator's GitLab</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="https://github.com/4h0y/4h0y.github.io" target="_blank">Creator's GitHub</a>
-                </li>
-                <li>
-                    <a href="https://gitlab.com/4h0y/4h0y.gitlab.io" target="_blank">Creator's GitLab</a>
-                </li>
-            </ul>
+    </nav>
+
+    <div class="index-background"></div>
+
+    <div class="search-line">
+        <div id="yohoho" data-tv="1" data-resize="1">
+            <div class="brand">Yohoho</div>
+            <div class="form">
+                <input type="text" placeholder="Название фильма / ID КиноПоиск" id="search-title" name="title"
+                    style="width: 250px">
+                <input type="button" id="search" value="Найти">
+            </div>
         </div>
     </div>
-</nav>
 
-<div class="index-background"></div>
+    <script src="yo.js"></script>
 
-<div class="search-line">
-    <div id="yohoho" data-tv="1" data-resize="1">
-        <div class="brand">Yohoho</div>
-        <div class="form">
-            <input type="text" placeholder="Название фильма / ID КиноПоиск" id="search-title" name="title" style="width: 250px">
-            <input type="button" id="search" value="Найти">
-        </div>
-    </div>
-</div>
+    <body class="index-seo"
+        style="background-image: url(icons/daaa.png); height: 100%; width: 100%; background-repeat: repeat;"></body>
 
-<script src="yo.js"></script>
-
-<body class="index-seo" style="background-image: url(icons/daaa.png); height: 100%; width: 100%; background-repeat: repeat;" ></body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery-ui.autocomplete.scroll@0.1.9/jquery.ui.autocomplete.scroll.min.js"></script>
-<script>
-    WebFont.load({
-        google: {
-            families: ['Neucha']
-        }
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var search = document.querySelector('#search');
-        var title = document.querySelector('#search-title');
-        window.onhashchange = function() {
-            location.reload()
-        }
-        if (window.location.hash) {
-            var hash = window.location.hash.substring(1);
-            if (title && hash) {
-                title.value = decodeURIComponent(hash);
-                parse();
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script
+        src="https://cdn.jsdelivr.net/npm/jquery-ui.autocomplete.scroll@0.1.9/jquery.ui.autocomplete.scroll.min.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                families: ['Neucha']
             }
-        }
-
-        if (search) {
-            search.addEventListener('click', function () {
-                return parse();
-            });
-        }
-
-        if (title) {
-            title.addEventListener('keyup', function (event) {
-                event.preventDefault();
-                if (event.keyCode === 13) {
-                    return parse();
-                }
-            });
-        }
-
-        $('#search-title').autocomplete({
-            type: "GET",
-            minLength: 3,
-            maxShowItems: 7,
-            delay: 1000,
-            source : function (request, response) 
-            {                        
-                var search_string = document.getElementById('search-title').value
-                var source_url = "https://voljchill.cf:4431/search/" + search_string;
-
-                $.ajax({
-                    url: source_url,
-                    dataType: "json",
-                    data: request,
-                    success: function (data) {
-                        response($.map(data, function (c) {
-                        return {
-                            label: c.title,
-                            value: c.id
-                        };
-                    }));
-                    },
-                    error : function (a,b,c) { console.log(a) }
-                    });
-            },                
-            select: function (event, ui) { 
-                window.location.hash = '#' + ui.item.value;
-                if (window.location.hash) {
-                    var hash = window.location.hash.substring(1);
-                    if (title && hash) {
-                        title.value = decodeURIComponent(hash);
-                        parse();
-                    }
-                }
-            }               
         });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var search = document.querySelector('#search');
+            var title = document.querySelector('#search-title');
+            window.onhashchange = function () {
+                location.reload()
+            }
+            if (window.location.hash) {
+                var hash = window.location.hash.substring(1);
+                if (title && hash) {
+                    title.value = decodeURIComponent(hash);
+                    parse();
+                }
+            }
 
-        function parse() {
-            var yohoho = document.querySelector('#yohoho');
-            if (title && title.value && yohoho) {
-                if (/kinopoisk\.ru/i.test(title.value)) {
-                    var exec = /(film\/|movie\/).*?([0-9]{3,7})\//gi.exec(title.value);
-                    if (exec && exec[2]) {
-                        yohoho.dataset.kinopoisk = exec[2];
+            if (search) {
+                search.addEventListener('click', function () {
+                    return parse();
+                });
+            }
+
+            if (title) {
+                title.addEventListener('keyup', function (event) {
+                    event.preventDefault();
+                    if (event.keyCode === 13) {
+                        return parse();
+                    }
+                });
+            }
+
+            $('#search-title').autocomplete({
+                type: "GET",
+                minLength: 3,
+                maxShowItems: 7,
+                delay: 1000,
+                source: function (request, response) {
+                    var search_string = document.getElementById('search-title').value
+                    var source_url = "https://voljchill.cf:4431/search/" + search_string;
+
+                    $.ajax({
+                        url: source_url,
+                        dataType: "json",
+                        data: request,
+                        success: function (data) {
+                            response($.map(data, function (c) {
+                                var poster;
+                                if (c.hasOwnProperty('poster')) {
+                                    poster = c.poster
+                                } else {
+                                    poster = 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/1227434.jpg'
+                                }
+                                console.log(poster)
+                                return {
+                                    label: c.title,
+                                    value: c.id,
+                                    img: poster,
+                                };
+                            }));
+                        },
+                        error: function (a, b, c) { console.log(a) }
+                    });
+                },
+                select: function (event, ui) {
+                    window.location.hash = '#' + ui.item.value;
+                    if (window.location.hash) {
+                        var hash = window.location.hash.substring(1);
+                        if (title && hash) {
+                            title.value = decodeURIComponent(hash);
+                            parse();
+                        }
+                    }
+                },
+                html: true,
+                open: function (event, ui) {
+                    $(".ui-autocomplete").css("z-index", 1000);
+                }
+            })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    return $("<li><div><img src='" + item.img + "'><span>" + item.label + "</span></div></li>").appendTo(ul);
+                };
+
+
+            function parse() {
+                var yohoho = document.querySelector('#yohoho');
+                if (title && title.value && yohoho) {
+                    if (/kinopoisk\.ru/i.test(title.value)) {
+                        var exec = /(film\/|movie\/).*?([0-9]{3,7})\//gi.exec(title.value);
+                        if (exec && exec[2]) {
+                            yohoho.dataset.kinopoisk = exec[2];
+                            if (window.location.hostname === 'yohoho.cc') {
+                                window.location.href = 'https://4h0y.gitlab.io/#' + yohoho.dataset.kinopoisk;
+                                return;
+                            }
+                            window.location.hash = '#' + yohoho.dataset.kinopoisk;
+                            document.title = 'КиноПоиск: ' + yohoho.dataset.kinopoisk;
+                        }
+                    } else if (/^\d+$/.test(title.value)) {
+                        yohoho.dataset.kinopoisk = title.value;
                         if (window.location.hostname === 'yohoho.cc') {
                             window.location.href = 'https://4h0y.gitlab.io/#' + yohoho.dataset.kinopoisk;
                             return;
                         }
                         window.location.hash = '#' + yohoho.dataset.kinopoisk;
                         document.title = 'КиноПоиск: ' + yohoho.dataset.kinopoisk;
+                    } else {
+                        yohoho.dataset.title = encodeURIComponent(title.value);
+                        if (window.location.hostname === 'yohoho.cc') {
+                            window.location.href = 'https://4h0y.bitbucket.io/#' + yohoho.dataset.title;
+                            return;
+                        }
+                        window.location.hash = '#' + yohoho.dataset.title;
+                        document.title = title.value;
                     }
-                } else if (/^\d+$/.test(title.value)) {
-                    yohoho.dataset.kinopoisk = title.value;
-                    if (window.location.hostname === 'yohoho.cc') {
-                        window.location.href = 'https://4h0y.gitlab.io/#' + yohoho.dataset.kinopoisk;
-                        return;
-                    }
-                    window.location.hash = '#' + yohoho.dataset.kinopoisk;
-                    document.title = 'КиноПоиск: ' + yohoho.dataset.kinopoisk;
-                } else {
-                    yohoho.dataset.title = encodeURIComponent(title.value);
-                    if (window.location.hostname === 'yohoho.cc') {
-                        window.location.href = 'https://4h0y.bitbucket.io/#' + yohoho.dataset.title;
-                        return;
-                    }
-                    window.location.hash = '#' + yohoho.dataset.title;
-                    document.title = title.value;
+                    items = [];
+                    return yo();
                 }
-                items = [];
-                return yo();
             }
-        }
-    });
-</script>
+        });
+    </script>
 
 </body>
+
 </html>
