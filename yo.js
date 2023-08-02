@@ -96,7 +96,7 @@ function yo(self) {
 
     var bg = (options.bg && options.bg.replace(/[^0-9a-z]/ig, ''))
         ? options.bg.replace(/[^0-9a-z]/ig, '')
-        : '2A3440';
+        : '301934';
 
     var options_url = options.url
         ? decodeURIComponent(options.url).trim() + (decodeURIComponent(options.url).indexOf('?')+1 ? '&' : '?') + 'cache' + Math.random().toString().substr(2, 3)
