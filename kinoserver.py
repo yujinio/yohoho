@@ -37,7 +37,7 @@ app.add_middleware(
 @app.get("/search/{query}")
 def search(query: str, request: Request):
     try:
-        logger.info(request.client.host + ', ' + query)
+        logger.info(query)
         api_client = KinopoiskApiClient("token")
         api_request = SearchByKeywordRequest(query)
         response = api_client.films.send_search_by_keyword_request(api_request)
@@ -68,7 +68,7 @@ def search(query: str, request: Request):
                  name=film.name_ru
              movies.append({"id":film.film_id, "title":name + ' (' + str(film.year) + ') ' + film.type.name, "poster":film.poster_url_preview})
         json_string = json.dumps(movies)
-        logger.info(request.client.host + ', result_json: ' + json.dumps(movies, ensure_ascii=False))
+        logger.info(query + ', result_json: ' + json.dumps(movies, ensure_ascii=False))
         if len(movies) == 0:
             return []
         return Response(content=json_string, media_type="application/json")
@@ -93,7 +93,7 @@ def search(query: str, request: Request):
                      movie_type='Фильм'
                  movies.append({"id":movie.id, "title":movie.title + ' (' + str(movie.year) + ') ' + movie_type})
             json_string = json.dumps(movies)
-            logger.info(request.client.host + ', result_json: ' + json.dumps(movies, ensure_ascii=False))
+            logger.info(query + ', result_json: ' + json.dumps(movies, ensure_ascii=False))
             return Response(content=json_string, media_type="application/json")
         except Exception as error:
             exc_type, exc_obj, exc_tb = sys.exc_info()
