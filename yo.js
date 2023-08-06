@@ -372,7 +372,7 @@ function yo(self) {
                 x.className = "show";
                 setTimeout(function(){
                     x.className = x.className.replace("show", "");
-                    location.replace('https://olegsvs.github.io/4h0y2.github.io');
+                    location.replace('https://olegsvs.github.io/yohoho');
                 }, 2000);
             }
             else if (j > 1) {
@@ -478,7 +478,7 @@ function yo_get(url, body, callback) {
 				    x.className = x.className.replace("show", "");
 				}, 2000);
                 setTimeout(function(){
-                    location.replace('https://olegsvs.github.io/4h0y2.github.io');
+                    location.replace('https://olegsvs.github.io/yohoho');
                 }, 2000);
             }
         }
