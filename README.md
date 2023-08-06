@@ -1,1 +1,1 @@
-[olegsvs.github.io/4h0y2.github.io/](https://olegsvs.github.io/4h0y2.github.io/)
+[olegsvs.github.io/yohoho/](https://olegsvs.github.io/yohoho/)
