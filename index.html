@@ -395,6 +395,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://github.com/Nycto/PicoModal/releases/download/3.0.0/picoModal-3.0.0.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script
@@ -407,11 +408,46 @@
         });
     </script>
     <script>
+        function setCookie(name, value) {
+            var expires = "";
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
         document.addEventListener('DOMContentLoaded', function () {
             var search = document.querySelector('#search');
             var title = document.querySelector('#search-title');
             window.onhashchange = function () {
                 location.reload()
+            }
+            if(getCookie('tutorial-showed') == null) {
+                picoModal({
+                content: "<h3>Теперь поддерживается <br/>автодополнение по базе кинопоиска:</h3><div><img src='/icons/kp_tutorial.png' alt=''></img></div>",
+                overlayStyles: {
+                    backgroundColor: "black",
+                    opacity: 0.75,
+                },
+                modalStyles: {
+                    backgroundColor: "black",
+                    padding: "5px",
+                    borderRadius: "5px"
+                },
+                closeStyles: {
+                    position: "absolute", top: "-5px", right: "-5px",
+                    background: "purple", padding: "5px 10px", cursor: "pointer",
+                    borderRadius: "5px", border: "1px solid #ccc"
+                }
+            }).show();
+            setCookie('tutorial-showed', 'true')
             }
             if (window.location.hash) {
                 var hash = window.location.hash.substring(1);
