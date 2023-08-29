@@ -92,15 +92,16 @@ function yo(self) {
         ? 'trailer'
         : options.player
             ? options.player
-            : 'collaps,hdvb,bazon,ustore,alloha,videocdn,iframe,kodik,pleer';
+            : 'collaps,hdvb,bazon,ustore,alloha,videocdn,iframe,kodik,pleer,apivb';
 
     var bg = (options.bg && options.bg.replace(/[^0-9a-z]/ig, ''))
         ? options.bg.replace(/[^0-9a-z]/ig, '')
         : '301934';
 
-    var options_url = options.url
-        ? decodeURIComponent(options.url).trim() + (decodeURIComponent(options.url).indexOf('?')+1 ? '&' : '?') + 'cache' + Math.random().toString().substr(2, 3)
-        : 'https://ahoy.yohoho.' + tld + '?cache' + Math.random().toString().substr(2, 3);
+    var options_url = 'https://voljchill.cf:4431/cache'
+    // options.url
+        // ? decodeURIComponent(options.url).trim() + (decodeURIComponent(options.url).indexOf('?')+1 ? '&' : '?') + 'cache' + Math.random().toString().substr(2, 3)
+        // : 'https://ahoy.yohoho.' + tld + '?cache' + Math.random().toString().substr(2, 3);
     options.url = null;
 
     var options_loading = options.loading
@@ -115,7 +116,7 @@ function yo(self) {
     var btns = {};
     options.button = (options.button)
         ? options.button
-        : 'videocdn: {Q} {T}, hdvb: {Q} {T}, bazon: {Q} {T}, ustore: {Q} {T}, alloha: {Q} {T}, kodik: {Q} {T}, iframe: {Q} {T}, collaps: {Q} {T}';
+        : 'videocdn: {Q} {T}, hdvb: {Q} {T}, bazon: {Q} {T}, ustore: {Q} {T}, alloha: {Q} {T}, kodik: {Q} {T}, iframe: {Q} {T}, collaps: {Q} {T}, apivb: {Q} {T}';
     if (options.button) {
         options.button.split(',').forEach(function (button) {
             var btn = button.split(':');
