@@ -381,7 +381,8 @@
             <div class="form">
                 <input type="text" placeholder="Название фильма / ID КиноПоиск" id="search-title" name="title"
                     style="width: 250px">
-                <input type="button" id="search" value="Найти">
+                <!-- TODO search by title on server -->
+                <!-- <input type="button" id="search" value="Найти"> -->
             </div>
         </div>
     </div>
@@ -461,7 +462,8 @@
                 title.addEventListener('keyup', function (event) {
                     event.preventDefault();
                     if (event.keyCode === 13) {
-                        return parse();
+                        // TODO search by title on server
+                        // return parse();
                     }
                 });
             }
