@@ -1,6 +1,6 @@
 from typing import Union
 
-from fastapi import FastAPI, status, Response, Request
+from fastapi import FastAPI, status, Response, Request, Form
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,6 +11,7 @@ from nkinopoiskpy.movie import Movie
 import json
 import logging
 import sys
+import requests
 
 from kinopoisk_unofficial.kinopoisk_api_client import KinopoiskApiClient
 from kinopoisk_unofficial.request.films.search_by_keyword_request import SearchByKeywordRequest
@@ -33,6 +34,68 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.post("/cache")
+async def cache(kinopoisk: str = Form(...)):
+    iframes = []
+    try:
+        iframe_video = requests.get('https://iframe.video/api/v2/search?kp=' + str(kinopoisk), timeout=2)
+        first_result = iframe_video.json()["results"][0]
+        iframe_iframe = format_result('iframe', first_result['path'], first_result['title_ru'], '')
+        iframes.append(iframe_iframe)
+    except Exception as e:
+        logger.error('iframe.video ' + str(e))
+
+    try:
+        iframe_video = requests.get('https://apicollaps.cc/list?token=token&kinopoisk_id=' + str(kinopoisk), timeout=2)
+        first_result = iframe_video.json()["results"][0]
+        iframe_iframe = format_result('apicollaps', first_result['iframe_url'], first_result['name'], first_result['quality'])
+        iframes.append(iframe_iframe)
+    except Exception as e:
+        logger.error('apicollaps ' + str(e))
+
+    try:
+        iframe_video = requests.get('https://videocdn.tv/api/short?api_token=token&kinopoisk_id=' + str(kinopoisk), timeout=2)
+        first_result = iframe_video.json()["data"][0]
+        iframe_iframe = format_result('videocdn', first_result['iframe_src'], first_result['title'], '')
+        iframes.append(iframe_iframe)
+    except Exception as e:
+        logger.error('videocdn ' + str(e))
+
+    # try: #collapse analog
+    #     iframe_video = requests.get('https://api.bhcesh.me/list?token=token&kinopoisk_id=' + str(kinopoisk), timeout=2)
+    #     first_result = iframe_video.json()["results"][0]
+    #     iframe_iframe = format_result('bhcesh', first_result['iframe_url'], first_result['name'], first_result['quality'])
+    #     iframes.append(iframe_iframe)
+    # except Exception as e:
+    #     logger.error('bhcesh ' + str(e))
+
+    try:
+        iframe_video = requests.get('https://apivb.info/api/videos.json?token=token&id_kp=' + str(kinopoisk), timeout=2)
+        first_result = iframe_video.json()[0]
+        iframe_iframe = format_result('apivb', first_result['iframe_url'], first_result['title_ru'], first_result['quality'])
+        iframes.append(iframe_iframe)
+    except Exception as e:
+        logger.error('apivb ' + str(e))
+
+    try:
+        iframe_video = requests.get('https://bazon.cc/api/search?token=token&kp=' + str(kinopoisk), timeout=2)
+        first_result = iframe_video.json()['results']
+        final_res = ''
+        for res in first_result:
+            final_res = final_res + format_result('bazon', res['link'], res['info']['rus'], res['quality']) + ','
+        final_res = final_res.rstrip(',')
+        iframes.append(final_res)
+    except Exception as e:
+        logger.error('bazon ' + str(e))
+
+    result = "{"
+    for iframe in iframes:
+        result = result + iframe + ','
+    result = result + '}'
+    result = result.replace('},}', '}}')
+
 
 @app.get("/search/{query}")
 def search(query: str, request: Request):
