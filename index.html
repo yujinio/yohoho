@@ -387,7 +387,7 @@
                 <input type="text" placeholder="Название фильма / ID КиноПоиск" id="search-title" name="title"
                     style="width: 250px">
                 <!-- TODO search by title on server -->
-                <!-- <input type="button" id="search" value="Найти"> -->
+                <input type="button" id="search" value="Найти">
             </div>
         </div>
     </div>
@@ -459,7 +459,8 @@
 
             if (search) {
                 search.addEventListener('click', function () {
-                    return parse();
+                    // return parse();
+                    $('#search-title').autocomplete("search");
                 });
             }
 
@@ -467,6 +468,7 @@
                 title.addEventListener('keyup', function (event) {
                     event.preventDefault();
                     if (event.keyCode === 13) {
+                        $('#search-title').autocomplete("search");
                         // TODO search by title on server
                         // return parse();
                     }
@@ -487,11 +489,12 @@
                         dataType: "json",
                         data: request,
                         success: function (data) {
-                            data.push({
-                                title: 'Поиск не в кинопоиске',
-                                id: search_string,
-                                poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
-                            })
+                            // TODO search by title on server 
+                            // data.push({
+                            //     title: 'Поиск не в кинопоиске',
+                            //     id: search_string,
+                            //     poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
+                            // })
                             response($.map(data, function (c) {
                                 var poster;
                                 if (c.hasOwnProperty('poster')) {
