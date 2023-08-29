@@ -97,6 +97,10 @@ async def cache(kinopoisk: str = Form(...)):
     result = result.replace('},}', '}}')
 
 
+def format_result(src_name, iframe_url, translate, quality):
+    return '"' + src_name + '":{"iframe":"' + iframe_url + '","translate":"' + translate + '","quality":"' + quality + '"}'
+    
+    
 @app.get("/search/{query}")
 def search(query: str, request: Request):
     try:
