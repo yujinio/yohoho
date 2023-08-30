@@ -74,10 +74,10 @@ async def cache(kinopoisk: str = Form(...)):
     try:
         iframe_video = requests.get('https://apivb.info/api/videos.json?token=token&id_kp=' + str(kinopoisk), timeout=2)
         first_result = iframe_video.json()[0]
-        iframe_iframe = format_result('apivb', first_result['iframe_url'], first_result['title_ru'], first_result['quality'])
+        iframe_iframe = format_result('hdvb', first_result['iframe_url'], first_result['title_ru'], first_result['quality'])
         iframes.append(iframe_iframe)
     except Exception as e:
-        logger.error('apivb ' + str(e))
+        logger.error('hdvb ' + str(e))
 
     try:
         iframe_video = requests.get('https://bazon.cc/api/search?token=token&kp=' + str(kinopoisk), timeout=2)
