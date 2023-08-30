@@ -125,9 +125,7 @@ function yo(self) {
             }
         });
     }
-    options.button_limit = (options.button_limit && parseInt(options.button_limit) < 8)
-        ? parseInt(options.button_limit)
-        : 8;
+    options.button_limit = 10;
     options.button_size = (options.button_size && parseFloat(options.button_size))
         ? parseFloat(options.button_size)
         : 1;
