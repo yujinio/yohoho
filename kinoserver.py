@@ -90,6 +90,22 @@ async def cache(kinopoisk: str = Form(...)):
     except Exception as e:
         logger.error('bazon ' + str(e))
 
+    try:
+        iframe_video = requests.get('https://api.alloha.tv/?token=token&kp=' + str(kinopoisk), timeout=2)
+        first_result = iframe_video.json()['data']
+        iframe_iframe = format_result('alloha', first_result['iframe'], 'alloha ' + first_result['name'], first_result['quality'])
+        iframes.append(iframe_iframe)
+    except Exception as e:
+        logger.error('alloha ' + str(e))
+
+    try:
+        r = requests.get('https://voidboost.tv/embed/' + str(kinopoisk), timeout=2)
+        if r.status_code != 404:
+            iframe_iframe = format_result('voidboost', 'https://voidboost.tv/embed/' + str(kinopoisk), 'voidboost', '')
+            iframes.append(iframe_iframe)
+    except Exception as e:
+        logger.error('voidboost ' + str(e))
+
     result = "{"
     for iframe in iframes:
         result = result + iframe + ','
