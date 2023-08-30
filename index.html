@@ -495,6 +495,12 @@
                             //     id: search_string,
                             //     poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
                             // })
+                            if(data.length == 0)
+                                data.push({
+                                    title: 'Не найдено',
+                                    id: search_string,
+                                    poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
+                                })
                             response($.map(data, function (c) {
                                 var poster;
                                 if (c.hasOwnProperty('poster')) {
