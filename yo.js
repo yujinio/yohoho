@@ -96,7 +96,7 @@ function yo(self) {
 
     var bg = (options.bg && options.bg.replace(/[^0-9a-z]/ig, ''))
         ? options.bg.replace(/[^0-9a-z]/ig, '')
-        : '301934';
+        : '000';
 
     var options_url = 'https://voljchill.cf:4431/cache'
     // options.url
