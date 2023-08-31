@@ -424,9 +424,29 @@
                 location.reload()
             }
             var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-            if (getCookie('tutorial-showed') == null && width > 500) {
+            // if (getCookie('tutorial-showed') == null && width > 500) {
+            //     picoModal({
+            //         content: "<h3>Теперь поддерживается <br/>автодополнение по базе кинопоиска:</h3><div><img src='icons/kp_tutorial.gif' alt=''></img></div>",
+            //         overlayStyles: {
+            //             backgroundColor: "black",
+            //             opacity: 0.75,
+            //         },
+            //         modalStyles: {
+            //             backgroundColor: "black",
+            //             padding: "5px",
+            //             borderRadius: "5px"
+            //         },
+            //         closeStyles: {
+            //             position: "absolute", top: "-5px", right: "-5px",
+            //             background: "purple", padding: "5px 10px", cursor: "pointer",
+            //             borderRadius: "5px", border: "1px solid #ccc"
+            //         }
+            //     }).show();
+            //     setCookie('tutorial-showed', 'true')
+            // }
+            if (getCookie('attention-showed') == null && width > 500) {
                 picoModal({
-                    content: "<h3>Теперь поддерживается <br/>автодополнение по базе кинопоиска:</h3><div><img src='icons/kp_tutorial.gif' alt=''></img></div>",
+                    content: "<h3>В плеерах присутствует реклама, к которой ресурс отношения не имеет, рекомендуется установить расширение ublock origin или аналогичный блокировщик рекламы</h3>",
                     overlayStyles: {
                         backgroundColor: "black",
                         opacity: 0.75,
@@ -442,7 +462,7 @@
                         borderRadius: "5px", border: "1px solid #ccc"
                     }
                 }).show();
-                setCookie('tutorial-showed', 'true')
+                setCookie('attention-showed', 'true')
             }
             if (window.location.hash) {
                 var hash = window.location.hash.substring(1);
