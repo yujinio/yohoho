@@ -13,16 +13,20 @@ import logging
 import sys
 import requests
 
-from kinopoisk_unofficial.kinopoisk_api_client import KinopoiskApiClient
-from kinopoisk_unofficial.request.films.search_by_keyword_request import SearchByKeywordRequest
-from kinopoisk_unofficial.model.dictonary.film_type import FilmType
-from kinopoisk_unofficial.request.films.film_request import FilmRequest
+from cached_kinopoisk_unofficial.kinopoisk_api_client import CachedKinopoiskApiClient
+from cached_kinopoisk_unofficial.request.films.search_by_keyword_request import SearchByKeywordRequest
+from cached_kinopoisk_unofficial.model.dictonary.film_type import FilmType
+from cached_kinopoisk_unofficial.request.films.film_request import FilmRequest
+import requests_cache
+from datetime import timedelta
 
 logging.basicConfig(
     filename=('kino_server_int.log'),
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S'
 )
 logger = logging.getLogger(__name__)
+
+session = requests_cache.CachedSession('iframe_cache', expire_after=timedelta(days=1))
 
 app = FastAPI()
 origins = ["*"]
@@ -40,7 +44,7 @@ app.add_middleware(
 async def cache(kinopoisk: str = Form(...)):
     iframes = []
     try:
-        iframe_video = requests.get('https://iframe.video/api/v2/search?kp=' + str(kinopoisk), timeout=2)
+        iframe_video = session.get('https://iframe.video/api/v2/search?kp=' + str(kinopoisk), timeout=2)
         first_result = iframe_video.json()["results"][0]
         iframe_iframe = format_result('iframe', first_result['path'], first_result['title_ru'], '')
         iframes.append(iframe_iframe)
@@ -48,7 +52,7 @@ async def cache(kinopoisk: str = Form(...)):
         logger.error('iframe.video ' + str(e))
 
     try:
-        iframe_video = requests.get('https://apicollaps.cc/list?token=token&kinopoisk_id=' + str(kinopoisk), timeout=2)
+        iframe_video = session.get('https://apicollaps.cc/list?token=token&kinopoisk_id=' + str(kinopoisk), timeout=2)
         first_result = iframe_video.json()["results"][0]
         iframe_iframe = format_result('apicollaps', first_result['iframe_url'], first_result['name'], first_result['quality'])
         iframes.append(iframe_iframe)
@@ -56,7 +60,7 @@ async def cache(kinopoisk: str = Form(...)):
         logger.error('apicollaps ' + str(e))
 
     try:
-        iframe_video = requests.get('https://videocdn.tv/api/short?api_token=token&kinopoisk_id=' + str(kinopoisk), timeout=2)
+        iframe_video = session.get('https://videocdn.tv/api/short?api_token=token&kinopoisk_id=' + str(kinopoisk), timeout=2)
         first_result = iframe_video.json()["data"][0]
         iframe_iframe = format_result('videocdn', first_result['iframe_src'], first_result['title'], '')
         iframes.append(iframe_iframe)
@@ -72,7 +76,7 @@ async def cache(kinopoisk: str = Form(...)):
     #     logger.error('bhcesh ' + str(e))
 
     try:
-        iframe_video = requests.get('https://apivb.info/api/videos.json?token=token&id_kp=' + str(kinopoisk), timeout=2)
+        iframe_video = session.get('https://apivb.info/api/videos.json?token=token&id_kp=' + str(kinopoisk), timeout=2)
         first_result = iframe_video.json()[0]
         iframe_iframe = format_result('hdvb', first_result['iframe_url'], first_result['title_ru'], first_result['quality'])
         iframes.append(iframe_iframe)
@@ -80,7 +84,7 @@ async def cache(kinopoisk: str = Form(...)):
         logger.error('hdvb ' + str(e))
 
     try:
-        iframe_video = requests.get('https://bazon.cc/api/search?token=token&kp=' + str(kinopoisk), timeout=2)
+        iframe_video = session.get('https://bazon.cc/api/search?token=token&kp=' + str(kinopoisk), timeout=2)
         first_result = iframe_video.json()['results']
         final_res = ''
         for res in first_result:
@@ -91,7 +95,7 @@ async def cache(kinopoisk: str = Form(...)):
         logger.error('bazon ' + str(e))
 
     try:
-        iframe_video = requests.get('https://api.alloha.tv/?token=token&kp=' + str(kinopoisk), timeout=2)
+        iframe_video = session.get('https://api.alloha.tv/?token=token&kp=' + str(kinopoisk), timeout=2)
         first_result = iframe_video.json()['data']
         iframe_iframe = format_result('alloha', first_result['iframe'], 'alloha ' + first_result['name'], first_result['quality'])
         iframes.append(iframe_iframe)
@@ -99,7 +103,7 @@ async def cache(kinopoisk: str = Form(...)):
         logger.error('alloha ' + str(e))
 
     try:
-        r = requests.get('https://voidboost.tv/embed/' + str(kinopoisk), timeout=2)
+        r = session.get('https://voidboost.tv/embed/' + str(kinopoisk), timeout=2)
         if r.status_code != 404:
             iframe_iframe = format_result('voidboost', 'https://voidboost.tv/embed/' + str(kinopoisk), 'voidboost', '')
             iframes.append(iframe_iframe)
@@ -121,7 +125,7 @@ def format_result(src_name, iframe_url, translate, quality):
 def search(query: str, request: Request):
     try:
         logger.info(query)
-        api_client = KinopoiskApiClient("token")
+        api_client = CachedKinopoiskApiClient("token")
         api_request = SearchByKeywordRequest(query)
         response = api_client.films.send_search_by_keyword_request(api_request)
         movies = []
