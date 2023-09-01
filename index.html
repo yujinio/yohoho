@@ -389,7 +389,7 @@
                 <input type="radio" name="tab-btn" id="tab-btn-2" value="">
                 <label for="tab-btn-2">Поиск по названию</label>
                 <div class="form" id="content-1">
-                    <input type="text" placeholder="Пример: 301 (Матрица)" id="input-kp"
+                    <input type="text" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Пример: 301 (Матрица)" id="input-kp"
                         style="text-align:center;width: 250px">
                     <input type="button" id="btn-kp" value="Найти">
                 </div>
