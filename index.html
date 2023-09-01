@@ -295,7 +295,7 @@
             margin: none;
         }
 
-        #search-title.ui-autocomplete-loading {
+        #input-search.ui-autocomplete-loading {
             background: black url("icons/loadspinner.gif") center no-repeat;
         }
 
@@ -383,15 +383,24 @@
     <div class="search-line">
         <div id="yohoho" data-tv="1" data-resize="1">
             <div class="brand">ReYohoho</div>
-            <div class="form">
-                <input type="text" placeholder="Название фильма / ID КиноПоиск" id="search-title" name="title"
-                    style="width: 250px">
-                <!-- TODO search by title on server -->
-                <input type="button" id="search" value="Найти">
+            <div class="tabs" style="text-align:center;">
+                <input type="radio" name="tab-btn" id="tab-btn-1" value="" checked="">
+                <label for="tab-btn-1">ID КиноПоиск</label>
+                <input type="radio" name="tab-btn" id="tab-btn-2" value="">
+                <label for="tab-btn-2">Поиск по названию</label>
+                <div class="form" id="content-1">
+                    <input type="text" placeholder="Пример: 301 (Матрица)" id="input-kp"
+                        style="text-align:center;width: 250px">
+                    <input type="button" id="btn-kp" value="Найти">
+                </div>
+                <div class="form" id="content-2">
+                    <input type="text" placeholder="Название фильма" id="input-search"
+                        style="text-align:center;width: 250px">
+                </div>
             </div>
         </div>
     </div>
-
+    <link rel="stylesheet" href="tabs.css">
     <script src="yo.js"></script>
 
     <body class="index-seo"></body>
@@ -424,32 +433,43 @@
             return null;
         }
         document.addEventListener('DOMContentLoaded', function () {
-            var search = document.querySelector('#search');
-            var title = document.querySelector('#search-title');
+            var search = document.querySelector('#input-kp');
+            var input_search = document.querySelector('#input-search');
+            var input_kp = document.querySelector('#input-kp');
+            var title
+            if(input_search) {
+                title = document.querySelector('#input-search');
+            }
+            if(input_kp) {
+                title = document.querySelector('#input-kp');
+            }
+            function parse() {
+                var yohoho = document.querySelector('#yohoho');
+                if (title && title.value && yohoho) {
+                    if (/kinopoisk\.ru/i.test(title.value)) {
+                        var exec = /(film\/|movie\/).*?([0-9]{3,7})\//gi.exec(title.value);
+                        if (exec && exec[2]) {
+                            yohoho.dataset.kinopoisk = exec[2];
+                            window.location.hash = '#' + yohoho.dataset.kinopoisk;
+                            document.title = 'КиноПоиск: ' + yohoho.dataset.kinopoisk;
+                        }
+                    } else if (/^\d+$/.test(title.value)) {
+                        yohoho.dataset.kinopoisk = title.value;
+                        window.location.hash = '#' + yohoho.dataset.kinopoisk;
+                        document.title = 'КиноПоиск: ' + yohoho.dataset.kinopoisk;
+                    } else {
+                        yohoho.dataset.title = encodeURIComponent(title.value);
+                        window.location.hash = '#' + yohoho.dataset.title;
+                        document.title = title.value;
+                    }
+                    items = [];
+                    return yo();
+                }
+            }
             window.onhashchange = function () {
                 location.reload()
             }
             var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-            // if (getCookie('tutorial-showed') == null && width > 500) {
-            //     picoModal({
-            //         content: "<h3>Теперь поддерживается <br/>автодополнение по базе кинопоиска:</h3><div><img src='icons/kp_tutorial.gif' alt=''></img></div>",
-            //         overlayStyles: {
-            //             backgroundColor: "black",
-            //             opacity: 0.75,
-            //         },
-            //         modalStyles: {
-            //             backgroundColor: "black",
-            //             padding: "5px",
-            //             borderRadius: "5px"
-            //         },
-            //         closeStyles: {
-            //             position: "absolute", top: "-5px", right: "-5px",
-            //             background: "purple", padding: "5px 10px", cursor: "pointer",
-            //             borderRadius: "5px", border: "1px solid #ccc"
-            //         }
-            //     }).show();
-            //     setCookie('tutorial-showed', 'true')
-            // }
             if (getCookie('attention-showed') == null && width > 500) {
                 picoModal({
                     content: "<h3>В плеерах присутствует реклама, к которой ресурс отношения не имеет, рекомендуется установить расширение ublock origin или аналогичный блокировщик рекламы</h3>",
@@ -477,123 +497,85 @@
                     parse();
                 }
             }
+            btn_kp = document.querySelector('#btn-kp');
 
-            if (search) {
-                search.addEventListener('click', function () {
-                    // return parse();
-                    $('#search-title').autocomplete("search");
+            if (btn_kp) {
+                btn_kp.addEventListener('click', function () {
+                    return parse();
                 });
-            }
-
-            if (title) {
-                title.addEventListener('keyup', function (event) {
+                input_kp.addEventListener('keyup', function (event) {
                     event.preventDefault();
                     if (event.keyCode === 13) {
-                        $('#search-title').autocomplete("search");
-                        // TODO search by title on server
-                        // return parse();
+                        return parse();
                     }
                 });
             }
 
-            $('#search-title').autocomplete({
-                type: "GET",
-                minLength: 3,
-                maxShowItems: 7,
-                delay: 1000,
-                source: function (request, response) {
-                    var search_string = document.getElementById('search-title').value
-                    var source_url = "https://voljchill.cf:4431/search/" + search_string;
 
-                    $.ajax({
-                        url: source_url,
-                        dataType: "json",
-                        data: request,
-                        success: function (data) {
-                            // TODO search by title on server 
-                            // data.push({
-                            //     title: 'Поиск не в кинопоиске',
-                            //     id: search_string,
-                            //     poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
-                            // })
-                            if (data.length == 0)
-                                data.push({
-                                    title: 'Не найдено',
-                                    id: search_string,
-                                    poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
-                                })
-                            response($.map(data, function (c) {
-                                var poster;
-                                if (c.hasOwnProperty('poster')) {
-                                    poster = c.poster
-                                } else {
-                                    poster = 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/1227434.jpg'
-                                }
-                                return {
-                                    label: c.title,
-                                    value: c.id,
-                                    img: poster,
-                                };
-                            }));
-
-                        },
-                        error: function (a, b, c) { console.log(a) }
-                    });
-                },
-                select: function (event, ui) {
-                    window.location.hash = '#' + ui.item.value;
-                    if (window.location.hash) {
-                        var hash = window.location.hash.substring(1);
-                        if (title && hash) {
-                            title.value = decodeURIComponent(hash);
-                            parse();
-                        }
+            if (input_search) {
+                input_search.addEventListener('keyup', function (event) {
+                    event.preventDefault();
+                    if (event.keyCode === 13) {
+                        $('#input-search').autocomplete("search");
                     }
-                },
-                html: true,
-                open: function (event, ui) {
-                    $(".ui-autocomplete").css("z-index", 1000);
-                }
-            })
-                .autocomplete("instance")._renderItem = function (ul, item) {
-                    return $("<li><div><img src='" + item.img + "'><span>" + item.label + "</span></div></li>").appendTo(ul);
-                };
+                });
 
+                $('#input-search').autocomplete({
+                    type: "GET",
+                    minLength: 3,
+                    maxShowItems: 7,
+                    delay: 1000,
+                    source: function (request, response) {
+                        var search_string = document.getElementById('input-search').value
+                        var source_url = "https://voljchill.cf:4431/search/" + search_string;
 
-            function parse() {
-                var yohoho = document.querySelector('#yohoho');
-                if (title && title.value && yohoho) {
-                    if (/kinopoisk\.ru/i.test(title.value)) {
-                        var exec = /(film\/|movie\/).*?([0-9]{3,7})\//gi.exec(title.value);
-                        if (exec && exec[2]) {
-                            yohoho.dataset.kinopoisk = exec[2];
-                            if (window.location.hostname === 'yohoho.cc') {
-                                window.location.href = 'https://4h0y.gitlab.io/#' + yohoho.dataset.kinopoisk;
-                                return;
+                        $.ajax({
+                            url: source_url,
+                            dataType: "json",
+                            data: request,
+                            success: function (data) {
+                                if (data.length == 0)
+                                    data.push({
+                                        title: 'Не найдено',
+                                        id: search_string,
+                                        poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
+                                    })
+                                response($.map(data, function (c) {
+                                    var poster;
+                                    if (c.hasOwnProperty('poster')) {
+                                        poster = c.poster
+                                    } else {
+                                        poster = 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/1227434.jpg'
+                                    }
+                                    return {
+                                        label: c.title,
+                                        value: c.id,
+                                        img: poster,
+                                    };
+                                }));
+
+                            },
+                            error: function (a, b, c) { console.log(a) }
+                        });
+                    },
+                    select: function (event, ui) {
+                        window.location.hash = '#' + ui.item.value;
+                        if (window.location.hash) {
+                            var hash = window.location.hash.substring(1);
+                            if (title && hash) {
+                                title.value = decodeURIComponent(hash);
+                                parse();
                             }
-                            window.location.hash = '#' + yohoho.dataset.kinopoisk;
-                            document.title = 'КиноПоиск: ' + yohoho.dataset.kinopoisk;
                         }
-                    } else if (/^\d+$/.test(title.value)) {
-                        yohoho.dataset.kinopoisk = title.value;
-                        if (window.location.hostname === 'yohoho.cc') {
-                            window.location.href = 'https://4h0y.gitlab.io/#' + yohoho.dataset.kinopoisk;
-                            return;
-                        }
-                        window.location.hash = '#' + yohoho.dataset.kinopoisk;
-                        document.title = 'КиноПоиск: ' + yohoho.dataset.kinopoisk;
-                    } else {
-                        yohoho.dataset.title = encodeURIComponent(title.value);
-                        if (window.location.hostname === 'yohoho.cc') {
-                            window.location.href = 'https://4h0y.bitbucket.io/#' + yohoho.dataset.title;
-                            return;
-                        }
-                        window.location.hash = '#' + yohoho.dataset.title;
-                        document.title = title.value;
+                    },
+                    html: true,
+                    open: function (event, ui) {
+                        $(".ui-autocomplete").css("z-index", 1000);
                     }
-                    items = [];
-                    return yo();
-                }
+                })
+                    .autocomplete("instance")._renderItem = function (ul, item) {
+                        return $("<li><div><img src='" + item.img + "'><span>" + item.label + "</span></div></li>").appendTo(ul);
+                    };
             }
         });
 
