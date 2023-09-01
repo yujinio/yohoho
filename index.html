@@ -437,10 +437,10 @@
             var input_search = document.querySelector('#input-search');
             var input_kp = document.querySelector('#input-kp');
             var title
-            if(input_search) {
+            if (input_search) {
                 title = document.querySelector('#input-search');
             }
-            if(input_kp) {
+            if (input_kp) {
                 title = document.querySelector('#input-kp');
             }
             function parse() {
@@ -537,7 +537,7 @@
                                 if (data.length == 0)
                                     data.push({
                                         title: 'Не найдено',
-                                        id: search_string,
+                                        id: '0',
                                         poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
                                     })
                                 response($.map(data, function (c) {
@@ -559,14 +559,20 @@
                         });
                     },
                     select: function (event, ui) {
-                        window.location.hash = '#' + ui.item.value;
-                        if (window.location.hash) {
-                            var hash = window.location.hash.substring(1);
-                            if (title && hash) {
-                                title.value = decodeURIComponent(hash);
-                                parse();
+                        if (ui.item.value != '0') {
+                            window.location.hash = '#' + ui.item.value;
+                            if (window.location.hash) {
+                                var hash = window.location.hash.substring(1);
+                                if (title && hash) {
+                                    title.value = decodeURIComponent(hash);
+                                    parse();
+                                }
                             }
+                        } else {
+                            ui.item.value = '';
+                            return;
                         }
+
                     },
                     html: true,
                     open: function (event, ui) {
