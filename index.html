@@ -510,7 +510,7 @@
                                 }
                                 $('#kp-title').html(name + ' (' + data.year + ')');
                                 $('#kp-slogan').html(data.slogan);
-                                $('#kp-rating').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.kinopoisk.ru/film/' + yohoho.dataset.kinopoisk + '/" target="_blank"><img class="kp-img" width="20" height="20" style="margin-top: -6px" src="https://static.kinokoks.sbs/static/img/icon/kp.svg" title="' + data.rating_kinopoisk_vote_count + ' гол."></a>&nbsp;&nbsp;<h>' + data.rating_kinopoisk + '</h>');
+                                $('#kp-rating').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.kinopoisk.ru/film/' + yohoho.dataset.kinopoisk + '/" target="_blank"><img class="kp-img" width="20" height="20" style="margin-top: -6px" src="icons/icon-kp-inv.svg" title="' + data.rating_kinopoisk_vote_count + ' гол."></a>&nbsp;&nbsp;<h>' + data.rating_kinopoisk + '</h>');
                             },
                             error: function (a, b, c) { console.log(a) }
                         });
