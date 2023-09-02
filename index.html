@@ -527,7 +527,7 @@
                     delay: 1000,
                     source: function (request, response) {
                         var search_string = document.getElementById('input-search').value
-                        var source_url = "https://voljchill.cf:4431/search/" + search_string;
+                        var source_url = "https://voljchill.cf:4431/search/" + search_string + "?code=1";
 
                         $.ajax({
                             url: source_url,
