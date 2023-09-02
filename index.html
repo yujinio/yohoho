@@ -334,6 +334,32 @@
             font-weight: 700;
             font-size: 16px;
         }
+
+        #kpcontainer,
+        #kp-info {
+            font-size: 24px;
+
+        }
+
+        #kp-info {
+            text-align: center;
+
+        }
+
+        #kp-title,
+        #kp-rating {
+            display: inline;
+        }
+
+        #kp-slogan {
+            font-size: 16px;
+            color: gray;
+        }
+
+        #kp-img {
+            margin-top: 110px;
+            padding: 100px;
+        }
     </style>
 
 </head>
@@ -379,8 +405,15 @@
     </nav>
 
     <div class="index-background"></div>
-
     <div class="search-line">
+        <div id="kp-info">
+            <div id="kp-container">
+                <div id="kp-title"></div>
+                <div id="kp-rating"></div>
+            </div>
+            <div id="kp-slogan"></div>
+
+        </div>
         <div id="yohoho" data-tv="1" data-resize="1">
             <div class="brand">ReYohoho</div>
             <div class="tabs" style="text-align:center;">
@@ -389,8 +422,8 @@
                 <input type="radio" name="tab-btn" id="tab-btn-2" value="">
                 <label for="tab-btn-2">Поиск по названию</label>
                 <div class="form" id="content-1">
-                    <input type="text" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" placeholder="Пример: 301 (Матрица)" id="input-kp"
-                        style="text-align:center;width: 250px">
+                    <input type="text" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')"
+                        placeholder="Пример: 301 (Матрица)" id="input-kp" style="text-align:center;width: 250px">
                     <input type="button" id="btn-kp" value="Найти">
                 </div>
                 <div class="form" id="content-2">
@@ -463,6 +496,25 @@
                         document.title = title.value;
                     }
                     items = [];
+                    if (title) {
+                        var source_url = "https://voljchill.cf:4431/kp_info/" + yohoho.dataset.kinopoisk + "?code=1";
+                        $.ajax({
+                            url: source_url,
+                            dataType: "json",
+                            success: function (data) {
+                                name = ''
+                                if (data.name_ru == null) {
+                                    name = data.name_en
+                                } else {
+                                    name = data.name_ru
+                                }
+                                $('#kp-title').html(name + ' (' + data.year + ')');
+                                $('#kp-slogan').html(data.slogan);
+                                $('#kp-rating').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.kinopoisk.ru/film/' + yohoho.dataset.kinopoisk + '/" target="_blank"><img class="kp-img" width="20" height="20" style="margin-top: -6px" src="https://static.kinokoks.sbs/static/img/icon/kp.svg" title="' + data.rating_kinopoisk_vote_count + ' гол."></a>&nbsp;&nbsp;<h>' + data.rating_kinopoisk + '</h>');
+                            },
+                            error: function (a, b, c) { console.log(a) }
+                        });
+                    }
                     return yo();
                 }
             }
