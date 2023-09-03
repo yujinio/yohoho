@@ -357,7 +357,8 @@
 
 </head>
 <div class="rain front-row"></div>
-
+<div class="stars"></div>
+<div class="twinkling"></div>
 <body class="index">
     <div id="snackbar">Не найдено =(</div>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -436,8 +437,10 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://github.com/Nycto/PicoModal/releases/download/3.0.0/picoModal-3.0.0.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="rain.css">
-    <script src="rain.js"></script>
+    <!-- <link rel="stylesheet" href="rain.css"> -->
+    <!-- <script src="rain.js"></script> -->
+    <!-- <script src="snow.js"></script> -->
+    <link rel="stylesheet" href="stars.css">
     <script
         src="https://cdn.jsdelivr.net/npm/jquery-ui.autocomplete.scroll@0.1.9/jquery.ui.autocomplete.scroll.min.js"></script>
     <script>
@@ -457,6 +460,7 @@
             return null;
         }
         document.addEventListener('DOMContentLoaded', function () {
+            // $(document).snowfall({shadow: true});
             var search = document.querySelector('#input-kp');
             var input_search = document.querySelector('#input-search');
             var input_kp = document.querySelector('#input-kp');
