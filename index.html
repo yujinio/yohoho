@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Neucha:wght@300;400&dispay=block"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <title>ReYohoho - онлайн просмотр кино и сериалов</title>
     <meta name="description" content="ReYohoho">
 
@@ -431,7 +430,6 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://github.com/Nycto/PicoModal/releases/download/3.0.0/picoModal-3.0.0.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <link rel="stylesheet" href="rain.css">
     <script src="rain.js"></script>
     <script
@@ -564,6 +562,7 @@
                     minLength: 3,
                     maxShowItems: 7,
                     delay: 2000,
+                    position: { my: "center top", at: "center bottom" },
                     source: function (request, response) {
                         var search_string = document.getElementById('input-search').value
                         var source_url = "https://voljchill.cf:4431/search/" + search_string + "?code=1";
@@ -619,7 +618,7 @@
                     }
                 })
                     .autocomplete("instance")._renderItem = function (ul, item) {
-                        return $("<li><div><img src='" + item.img + "'><span>" + item.label + "</span></div></li>").appendTo(ul);
+                        return $("<li><div><img width=64 height=96 src='" + item.img + "'><span>" + item.label + "</span></div></li>").appendTo(ul);
                     };
             }
         });
