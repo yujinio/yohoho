@@ -219,7 +219,7 @@
 
             .search-line {
                 left: 0;
-                top: 0;
+                top: 5%;
                 margin: 0 !important;
                 width: 100%;
             }
@@ -506,7 +506,6 @@
                             url: source_url,
                             dataType: "json",
                             success: function (data) {
-                                console.log(data)
                                 name = ''
                                 if (data.name_ru == null) {
                                     name = data.name_en
