@@ -262,8 +262,7 @@
         }
 
         .ui-autocomplete {
-            height: 40%;
-            overflow-y: scroll;
+            overflow-y: auto;
             overflow-x: hidden;
         }
 
@@ -277,7 +276,6 @@
 
         .ui-menu .ui-menu-item {
             color: white;
-            background-color: black;
             margin: none;
         }
 
@@ -302,6 +300,13 @@
             padding: 0 0 10px 10px;
             margin: 0 0 10px 0 !important;
             white-space: nowrap;
+        }
+
+        .ui-autocomplete.ui-menu.ui-widget.ui-widget-content {
+            background-color: transparent;
+            border-color: white;
+            border-radius: 5px;
+            border-width: 1px;
         }
 
         .kinopoisk:hover {
@@ -514,7 +519,7 @@
                                 if (data.slogan != "null") {
                                     $('#kp-slogan').html(data.slogan);
                                 }
-                                if (data.rating_kinopoisk != "null" || data.rating_kinopoisk != null) {
+                                if (data.rating_kinopoisk != "null" && data.rating_kinopoisk != null) {
                                     $('#kp-rating').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.kinopoisk.ru/film/' + yohoho.dataset.kinopoisk + '/" target="_blank"><img class="kp-img" width="20" height="20" style="margin-top: -6px" src="icons/icon-kp-inv.svg" title="' + data.rating_kinopoisk_vote_count + ' гол."></a>&nbsp;&nbsp;<h>' + data.rating_kinopoisk + '</h>');
                                 }
                             },
@@ -597,12 +602,16 @@
                             dataType: "json",
                             data: request,
                             success: function (data) {
-                                if (data.length == 0)
+                                if (data.length == 0){
                                     data.push({
                                         title: 'Не найдено',
                                         id: '0',
                                         poster: 'https://cdn.7tv.app/emote/6317487fb2ef04bef5ded591/3x.webp',
                                     })
+                                    $(".ui-autocomplete").css("height", "auto");
+                                } else {
+                                    $(".ui-autocomplete").css("height", "40%");
+                                }
                                 response($.map(data, function (c) {
                                     var poster;
                                     if (c.hasOwnProperty('poster')) {
