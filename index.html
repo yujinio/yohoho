@@ -111,6 +111,15 @@
             text-align: justify;
         }
 
+        .footer {
+            z-index: 3;
+            position: absolute;
+            bottom: 5%;
+            width: 100%;
+            height: auto;
+            background-color: black
+        }
+
         .search-line {
             z-index: 3;
             position: absolute !important;
@@ -436,6 +445,13 @@
             </div>
         </div>
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span id="count">В плеерах присутствует реклама, к которой ресурс отношения не имеет, рекомендуется установить расширение ublock origin или аналогичный блокировщик рекламы</span>
+        </div>
+    </footer>
+
     <link rel="stylesheet" href="tabs.css">
     <script src="yo.js"></script>
 
@@ -445,7 +461,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="https://github.com/Nycto/PicoModal/releases/download/3.0.0/picoModal-3.0.0.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <!-- <link rel="stylesheet" href="rain.css"> -->
     <!-- <script src="rain.js"></script> -->
@@ -530,27 +545,6 @@
             }
             window.onhashchange = function () {
                 location.reload()
-            }
-            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-            if (getCookie('attention-showed') == null && width > 500) {
-                picoModal({
-                    content: "<h3>В плеерах присутствует реклама, к которой ресурс отношения не имеет, рекомендуется установить расширение ublock origin или аналогичный блокировщик рекламы</h3>",
-                    overlayStyles: {
-                        backgroundColor: "black",
-                        opacity: 0.75,
-                    },
-                    modalStyles: {
-                        backgroundColor: "black",
-                        padding: "5px",
-                        borderRadius: "5px"
-                    },
-                    closeStyles: {
-                        position: "absolute", top: "-5px", right: "-5px",
-                        background: "purple", padding: "5px 10px", cursor: "pointer",
-                        borderRadius: "5px", border: "1px solid #ccc"
-                    }
-                }).show();
-                setCookie('attention-showed', 'true')
             }
             if (window.location.hash) {
                 var hash = window.location.hash.substring(1);
