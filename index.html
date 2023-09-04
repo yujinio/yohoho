@@ -359,6 +359,7 @@
 <div class="rain front-row"></div>
 <div class="stars"></div>
 <div class="twinkling"></div>
+
 <body class="index">
     <div id="snackbar">Не найдено =(</div>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -394,7 +395,8 @@
                         <a href="/yohoho/contact.html" target="_blank">Правообладателям</a>
                     </li>
                     <li>
-                        <a href="https://t.me/ReYohoho" target="_blank"><img width="20" height="20" src="icons/telegram.svg" title="Новости, поддержка"></a>
+                        <a href="https://t.me/ReYohoho" target="_blank"><img width="20" height="20"
+                                src="icons/telegram.svg" title="Новости, поддержка"></a>
                     </li>
                 </ul>
             </div>
@@ -493,22 +495,28 @@
                         window.location.hash = '#' + yohoho.dataset.title;
                         document.title = title.value;
                     }
-                    items = [];
                     if (title) {
                         var source_url = "https://voljchill.cf:4431/kp_info/" + yohoho.dataset.kinopoisk + "?code=1";
                         $.ajax({
                             url: source_url,
                             dataType: "json",
                             success: function (data) {
+                                console.log(data)
                                 name = ''
                                 if (data.name_ru == null) {
                                     name = data.name_en
                                 } else {
                                     name = data.name_ru
                                 }
-                                $('#kp-title').html(name + ' (' + data.year + ')');
-                                $('#kp-slogan').html(data.slogan);
-                                $('#kp-rating').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.kinopoisk.ru/film/' + yohoho.dataset.kinopoisk + '/" target="_blank"><img class="kp-img" width="20" height="20" style="margin-top: -6px" src="icons/icon-kp-inv.svg" title="' + data.rating_kinopoisk_vote_count + ' гол."></a>&nbsp;&nbsp;<h>' + data.rating_kinopoisk + '</h>');
+                                if (name != "null") {
+                                    $('#kp-title').html(name + ' (' + data.year + ')');
+                                }
+                                if (data.slogan != "null") {
+                                    $('#kp-slogan').html(data.slogan);
+                                }
+                                if (data.rating_kinopoisk != "null" || data.rating_kinopoisk != null) {
+                                    $('#kp-rating').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.kinopoisk.ru/film/' + yohoho.dataset.kinopoisk + '/" target="_blank"><img class="kp-img" width="20" height="20" style="margin-top: -6px" src="icons/icon-kp-inv.svg" title="' + data.rating_kinopoisk_vote_count + ' гол."></a>&nbsp;&nbsp;<h>' + data.rating_kinopoisk + '</h>');
+                                }
                             },
                             error: function (a, b, c) { console.log(a) }
                         });
@@ -551,12 +559,16 @@
 
             if (btn_kp) {
                 btn_kp.addEventListener('click', function () {
-                    return parse();
+                    yohoho.dataset.title = encodeURIComponent(title.value);
+                    window.location.hash = '#' + yohoho.dataset.title;
+                    document.title = title.value;
                 });
                 input_kp.addEventListener('keyup', function (event) {
                     event.preventDefault();
                     if (event.keyCode === 13) {
-                        return parse();
+                        yohoho.dataset.title = encodeURIComponent(title.value);
+                        window.location.hash = '#' + yohoho.dataset.title;
+                        document.title = title.value;
                     }
                 });
             }
@@ -611,14 +623,9 @@
                     },
                     select: function (event, ui) {
                         if (ui.item.value != '0') {
+                            yohoho.dataset.title = encodeURIComponent(title.value);
                             window.location.hash = '#' + ui.item.value;
-                            if (window.location.hash) {
-                                var hash = window.location.hash.substring(1);
-                                if (title && hash) {
-                                    title.value = decodeURIComponent(hash);
-                                    parse();
-                                }
-                            }
+                            document.title = title.value;
                         } else {
                             ui.item.value = '';
                             return;
