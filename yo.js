@@ -98,7 +98,7 @@ function yo(self) {
         ? options.bg.replace(/[^0-9a-z]/ig, '')
         : '000';
 
-    var options_url = 'https://voljchill.cf:4431/cache'
+    var options_url = 'https://voljchill.cf:4432/cache'
     // options.url
         // ? decodeURIComponent(options.url).trim() + (decodeURIComponent(options.url).indexOf('?')+1 ? '&' : '?') + 'cache' + Math.random().toString().substr(2, 3)
         // : 'https://ahoy.yohoho.' + tld + '?cache' + Math.random().toString().substr(2, 3);
