@@ -115,7 +115,8 @@ async def cache(kinopoisk: str = Form(...)):
         result = result + iframe + ','
     result = result + '}'
     result = result.replace('},}', '}}')
-
+    return Response(content=result, media_type="application/json")
+    
 
 def format_result(src_name, iframe_url, translate, quality):
     return '"' + src_name + '":{"iframe":"' + iframe_url + '","translate":"' + translate + '","quality":"' + quality + '"}'
