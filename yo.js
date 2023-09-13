@@ -92,7 +92,7 @@ function yo(self) {
         ? 'trailer'
         : options.player
             ? options.player
-            : 'collaps,hdrezka,framprox,hdvb,bazon,ustore,alloha,videocdn,iframe,kodik,pleer';
+            : 'collaps,hdrezka,hdvb,bazon,ustore,alloha,videocdn,iframe,kodik,pleer';
 
     var bg = (options.bg && options.bg.replace(/[^0-9a-z]/ig, ''))
         ? options.bg.replace(/[^0-9a-z]/ig, '')
@@ -116,7 +116,7 @@ function yo(self) {
     var btns = {};
     options.button = (options.button)
         ? options.button
-        : 'collaps: {Q} {T}, hdrezka: {Q} {T}, framprox: {Q} {T}, videocdn: {Q} {T}, hdvb: {Q} {T}, bazon: {Q} {T}, ustore: {Q} {T}, alloha: {Q} {T}, kodik: {Q} {T}, iframe: {Q} {T}';
+        : 'collaps: {Q} {T}, hdrezka: {Q} {T}, videocdn: {Q} {T}, hdvb: {Q} {T}, bazon: {Q} {T}, ustore: {Q} {T}, alloha: {Q} {T}, kodik: {Q} {T}, iframe: {Q} {T}';
     if (options.button) {
         options.button.split(',').forEach(function (button) {
             var btn = button.split(':');
