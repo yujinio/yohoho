@@ -1,13 +1,13 @@
 function yo_ahoy_key(event) {
     if (!event || (!event.key && !event.keyCode)) return;
-    var key='';'Enter'===event.key||13===event.keyCode?key='fullscreen':'Left'===event.key||'ArrowLeft'===event.key||37===event.keyCode?key='prev':'Right'===event.key||'ArrowRight'===event.key||39===event.keyCode?key='next':'Up'===event.key||'ArrowUp'===event.key||38===event.keyCode?key='up':'Down'===event.key||'ArrowDown'===event.key||40===event.keyCode?key='down':'0'===event.key||48===event.keyCode?key='0':'1'===event.key||49===event.keyCode?key='1':'2'===event.key||50===event.keyCode?key='2':'3'===event.key||51===event.keyCode?key='3':'4'===event.key||52===event.keyCode?key='4':'5'===event.key||53===event.keyCode?key='5':'6'===event.key||54===event.keyCode?key='6':'7'===event.key||55===event.keyCode?key='7':'8'===event.key||56===event.keyCode?key='8':'9'!==event.key&&57!==event.keyCode||(key='9');
+    var key = ''; 'Enter' === event.key || 13 === event.keyCode ? key = 'fullscreen' : 'Left' === event.key || 'ArrowLeft' === event.key || 37 === event.keyCode ? key = 'prev' : 'Right' === event.key || 'ArrowRight' === event.key || 39 === event.keyCode ? key = 'next' : 'Up' === event.key || 'ArrowUp' === event.key || 38 === event.keyCode ? key = 'up' : 'Down' === event.key || 'ArrowDown' === event.key || 40 === event.keyCode ? key = 'down' : '0' === event.key || 48 === event.keyCode ? key = '0' : '1' === event.key || 49 === event.keyCode ? key = '1' : '2' === event.key || 50 === event.keyCode ? key = '2' : '3' === event.key || 51 === event.keyCode ? key = '3' : '4' === event.key || 52 === event.keyCode ? key = '4' : '5' === event.key || 53 === event.keyCode ? key = '5' : '6' === event.key || 54 === event.keyCode ? key = '6' : '7' === event.key || 55 === event.keyCode ? key = '7' : '8' === event.key || 56 === event.keyCode ? key = '8' : '9' !== event.key && 57 !== event.keyCode || (key = '9');
     if (key && (key === 'up' || key === 'down')) {
         var a = document.querySelector('.yohoho-active');
         console.log(key, a.dataset.event, a && a.dataset && a.dataset.event && parseInt(a.dataset.event));
         if (a && a.dataset && a.dataset.event && parseInt(a.dataset.event)) {
             var u = key === 'up'
-                ? document.querySelector('[data-event="' + (parseInt(a.dataset.event)-1) + '"]:not([style*="display:none"]):not([style*="display: none"]')
-                : document.querySelector('[data-event="' + (parseInt(a.dataset.event)+1) + '"]:not([style*="display:none"]):not([style*="display: none"]');
+                ? document.querySelector('[data-event="' + (parseInt(a.dataset.event) - 1) + '"]:not([style*="display:none"]):not([style*="display: none"]')
+                : document.querySelector('[data-event="' + (parseInt(a.dataset.event) + 1) + '"]:not([style*="display:none"]):not([style*="display: none"]');
             if (!u && key === 'up') {
                 var p = document.querySelector('[data-event="prev"]:not([style*="display:none"]):not([style*="display: none"]');
                 if (p && typeof p.onclick === 'function') {
@@ -68,7 +68,8 @@ function yo(self) {
 
     var yohoho = document.createElement('div');
     var attr = Array.prototype.slice.call(y.attributes);
-    while(a = attr.pop()) {yohoho.setAttribute(a.nodeName, a.nodeValue);}
+
+    while (a = attr.pop()) { yohoho.setAttribute(a.nodeName, a.nodeValue); }
     yohoho.innerHTML = y.innerHTML;
     y.parentNode.replaceChild(yohoho, y);
 
@@ -100,8 +101,8 @@ function yo(self) {
 
     var options_url = 'https://voljchill.cf:4432/cache'
     // options.url
-        // ? decodeURIComponent(options.url).trim() + (decodeURIComponent(options.url).indexOf('?')+1 ? '&' : '?') + 'cache' + Math.random().toString().substr(2, 3)
-        // : 'https://ahoy.yohoho.' + tld + '?cache' + Math.random().toString().substr(2, 3);
+    // ? decodeURIComponent(options.url).trim() + (decodeURIComponent(options.url).indexOf('?')+1 ? '&' : '?') + 'cache' + Math.random().toString().substr(2, 3)
+    // : 'https://ahoy.yohoho.' + tld + '?cache' + Math.random().toString().substr(2, 3);
     options.url = null;
     options.code = "2";
     var options_loading = options.loading
@@ -110,8 +111,8 @@ function yo(self) {
     options.loading = null;
 
     var language = (options.language && !/ru/i.test(options.language))
-        ? {"trailer":"TRAILER","torrent":"DOWNLOAD","next":"NEXT","prev":"PREV"}
-        : {"trailer":"ТРЕЙЛЕР","torrent":"СКАЧАТЬ","next":"ВПЕРЕД","prev":"НАЗАД"};
+        ? { "trailer": "TRAILER", "torrent": "DOWNLOAD", "next": "NEXT", "prev": "PREV" }
+        : { "trailer": "ТРЕЙЛЕР", "torrent": "СКАЧАТЬ", "next": "ВПЕРЕД", "prev": "НАЗАД" };
 
     var btns = {};
     options.button = (options.button)
@@ -224,14 +225,14 @@ function yo(self) {
             h = 370;
         }
     }
-    else if (parseInt(yohoho.offsetHeight) && w/3 < parseInt(yohoho.offsetHeight)) {
+    else if (parseInt(yohoho.offsetHeight) && w / 3 < parseInt(yohoho.offsetHeight)) {
         h = parseInt(yohoho.offsetHeight);
     }
-    else if (yohoho.parentNode && parseInt(yohoho.parentNode.offsetHeight) && w/3 < parseInt(yohoho.parentNode.offsetHeight)) {
+    else if (yohoho.parentNode && parseInt(yohoho.parentNode.offsetHeight) && w / 3 < parseInt(yohoho.parentNode.offsetHeight)) {
         h = parseInt(yohoho.parentNode.offsetHeight);
     }
     else {
-        h = w/2;
+        h = w / 2;
     }
 
     var style = 'width:' + w + 'px;height:' + h + 'px;border:0;margin:0;padding:0;overflow:hidden;position:relative';
@@ -246,6 +247,9 @@ function yo(self) {
             var buttons = document.createElement('div');
             buttons.setAttribute('id', 'yohoho-buttons');
             var keys = options.player.split(options.separator);
+            var searchItems = document.getElementsByClassName('search-line');
+            for (var i = 0; i < searchItems.length; i++)
+                searchItems[i].style.marginTop = "0%";
             if (/\/\/|%2F%2F/i.test(options.player)) {
                 var p = [];
                 for (var k = 0; k < keys.length; k++) {
@@ -260,7 +264,7 @@ function yo(self) {
                     var yo_new = [];
                     for (var ps = 0; ps < keys.length; ps++) {
                         for (var pp = 0; pp < yo_res.length; pp++) {
-                            if (keys[ps].toLowerCase().indexOf(yo_res[pp].toLowerCase())+1) {
+                            if (keys[ps].toLowerCase().indexOf(yo_res[pp].toLowerCase()) + 1) {
                                 yo_new.push(yo_res[pp]);
                             }
                         }
@@ -280,18 +284,18 @@ function yo(self) {
                         : '';
                     var option = document.createElement('div');
                     option.setAttribute('onclick', 'yo_player("' + encodeURIComponent(players[key].iframe) + '", "' + players[key].quality + '", "' + players[key].translate + '", this, "' + options.button_size + '")');
-                    option.dataset.event = '' + (j+1);
-                    option.dataset.page = Math.ceil((j+1)/options.button_limit) + '';
+                    option.dataset.event = '' + (j + 1);
+                    option.dataset.page = Math.ceil((j + 1) / options.button_limit) + '';
                     option.dataset.iframe = players[key].iframe;
                     option.dataset.quality = players[key].quality;
                     option.dataset.translate = players[key].translate;
                     if (btns.hasOwnProperty(key) && btns[key]) {
                         var q = (players[key].quality)
-                            ? (players[key].quality.toUpperCase().search(/TS|TC|SCR|CAM/gi)+1)
+                            ? (players[key].quality.toUpperCase().search(/TS|TC|SCR|CAM/gi) + 1)
                                 ? 'ЭКРАН'
-                                : (players[key].quality.toUpperCase().search(/720P/gi)+1)
+                                : (players[key].quality.toUpperCase().search(/720P/gi) + 1)
                                     ? '720P'
-                                    : (players[key].quality.toUpperCase().search(/1080P/gi)+1)
+                                    : (players[key].quality.toUpperCase().search(/1080P/gi) + 1)
                                         ? '1080P'
                                         : players[key].quality
                                             .toUpperCase()
@@ -347,18 +351,18 @@ function yo(self) {
                         first = false;
                     }
                     buttons.appendChild(option);
-                    if (j && !(j % options.button_limit) && keys[i+1]) {
+                    if (j && !(j % options.button_limit) && keys[i + 1]) {
                         var next = document.createElement('div');
-                        next.setAttribute('onclick', 'yo_page(' + Math.ceil((j+1)/options.button_limit) + ', "' + options.button_size + '");' + 'yo_player("' + encodeURIComponent(players[keys[i+1].toLowerCase().trim()].iframe) + '", "' + players[keys[i+1].toLowerCase().trim()].quality + '", "' + players[keys[i+1].toLowerCase().trim()].translate + '", document.querySelector(\'[data-event="' + (j+1) + '"]\'), "' + options.button_size + '")');
+                        next.setAttribute('onclick', 'yo_page(' + Math.ceil((j + 1) / options.button_limit) + ', "' + options.button_size + '");' + 'yo_player("' + encodeURIComponent(players[keys[i + 1].toLowerCase().trim()].iframe) + '", "' + players[keys[i + 1].toLowerCase().trim()].quality + '", "' + players[keys[i + 1].toLowerCase().trim()].translate + '", document.querySelector(\'[data-event="' + (j + 1) + '"]\'), "' + options.button_size + '")');
                         next.dataset.event = 'next';
-                        next.dataset.page = Math.ceil(j/options.button_limit) + '';
+                        next.dataset.page = Math.ceil(j / options.button_limit) + '';
                         next.innerText = '-► ' + language.next;
                         buttons.appendChild(next);
 
                         var prev = document.createElement('div');
-                        prev.setAttribute('onclick', 'yo_page(' + Math.ceil(j/options.button_limit) + ', "' + options.button_size + '");' + 'yo_player("' + encodeURIComponent(players[keys[i-1].toLowerCase().trim()].iframe) + '", "' + players[keys[i-1].toLowerCase().trim()].quality + '", "' + players[keys[i-1].toLowerCase().trim()].translate + '", document.querySelector(\'[data-event="' + (j) + '"]\'), "' + options.button_size + '")');
+                        prev.setAttribute('onclick', 'yo_page(' + Math.ceil(j / options.button_limit) + ', "' + options.button_size + '");' + 'yo_player("' + encodeURIComponent(players[keys[i - 1].toLowerCase().trim()].iframe) + '", "' + players[keys[i - 1].toLowerCase().trim()].quality + '", "' + players[keys[i - 1].toLowerCase().trim()].translate + '", document.querySelector(\'[data-event="' + (j) + '"]\'), "' + options.button_size + '")');
                         prev.dataset.event = 'prev';
-                        prev.dataset.page = Math.ceil((j+1)/options.button_limit) + '';
+                        prev.dataset.page = Math.ceil((j + 1) / options.button_limit) + '';
                         prev.innerText = '◄- ' + language.prev;
                         buttons.appendChild(prev);
                     }
@@ -369,7 +373,7 @@ function yo(self) {
                 yohohoLoading.style.display = 'none';
                 var x = document.getElementById("snackbar");
                 x.className = "show";
-                setTimeout(function(){
+                setTimeout(function () {
                     x.className = x.className.replace("show", "");
                     location.replace('https://olegsvs.github.io/yohoho');
                 }, 2000);
@@ -385,7 +389,7 @@ function yo(self) {
 }
 
 function yo_player(iframe, quality, translate, element, buttons, size) {
-    window.parent.postMessage({"quality": quality, "translate": translate}, "*");
+    window.parent.postMessage({ "quality": quality, "translate": translate }, "*");
     var yohohoLoading = document.querySelector('#yohoho-loading');
     yohohoLoading.style.display = 'block';
     setTimeout(function () {
@@ -394,7 +398,7 @@ function yo_player(iframe, quality, translate, element, buttons, size) {
     var yohohoIframe = document.querySelector('#yohoho-iframe');
     yohohoIframe.style.display = 'block';
     if (iframe.indexOf('4h0y') + 1) {
-        yo_get(decodeURIComponent(iframe), '',function (json, html) {
+        yo_get(decodeURIComponent(iframe), '', function (json, html) {
             yohohoIframe.setAttribute('src', 'data:text/html;charset=utf-8,' + encodeURIComponent(html));
         });
     } else {
@@ -417,12 +421,12 @@ function yo_player(iframe, quality, translate, element, buttons, size) {
         if (yohohoButtons.style && typeof yohohoButtons.style === 'object') {
             yohohoButtons.style.right = '0';
         } else {
-            yohohoButtons.style = {right: '0'};
+            yohohoButtons.style = { right: '0' };
         }
         setTimeout(function () {
             var btn = setInterval(function () {
-                if (parseInt(yohohoButtons.style && yohohoButtons.style.right || '0') > -parseInt(yohohoButtons.offsetWidth)+(30*size))  {
-                    yohohoButtons.style.right = (parseInt(yohohoButtons.style.right)-1) + 'px';
+                if (parseInt(yohohoButtons.style && yohohoButtons.style.right || '0') > -parseInt(yohohoButtons.offsetWidth) + (30 * size)) {
+                    yohohoButtons.style.right = (parseInt(yohohoButtons.style.right) - 1) + 'px';
                 }
                 else {
                     clearInterval(btn);
@@ -451,8 +455,8 @@ function yo_page(page, size) {
         yohohoButtons.style.right = '0';
         setTimeout(function () {
             var btn = setInterval(function () {
-                if (parseInt(yohohoButtons.style && yohohoButtons.style.right || '0') > -parseInt(yohohoButtons.offsetWidth)+(30*size))  {
-                    yohohoButtons.style.right = (parseInt(yohohoButtons.style.right)-1) + 'px';
+                if (parseInt(yohohoButtons.style && yohohoButtons.style.right || '0') > -parseInt(yohohoButtons.offsetWidth) + (30 * size)) {
+                    yohohoButtons.style.right = (parseInt(yohohoButtons.style.right) - 1) + 'px';
                 }
                 else {
                     clearInterval(btn);
@@ -464,7 +468,7 @@ function yo_page(page, size) {
 
 function yo_get(url, body, callback) {
     var YoXmlHttp = new XMLHttpRequest();
-    YoXmlHttp.onreadystatechange = function() {
+    YoXmlHttp.onreadystatechange = function () {
         if (YoXmlHttp.readyState === 4) {
             if (YoXmlHttp.status === 200) {
                 callback(yo_json(YoXmlHttp.responseText), YoXmlHttp.responseText);
@@ -473,10 +477,10 @@ function yo_get(url, body, callback) {
                 callback({}, '');
                 var x = document.getElementById("snackbar");
                 x.className = "show";
-                setTimeout(function(){ 
-				    x.className = x.className.replace("show", "");
-				}, 2000);
-                setTimeout(function(){
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 2000);
+                setTimeout(function () {
                     location.replace('https://olegsvs.github.io/yohoho');
                 }, 2000);
             }
@@ -537,12 +541,12 @@ function yo_resize() {
     yi.parentNode.style.width = w + 'px';
 }
 
-(function() {
+(function () {
     var a = document.querySelectorAll('[data-ahoy]');
     if (a && a.length) {
         for (var i in a) {
             if (a.hasOwnProperty(i) && a[i]) {
-                a[i].addEventListener('click', function() {
+                a[i].addEventListener('click', function () {
                     yo(this);
                 });
             }

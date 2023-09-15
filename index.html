@@ -112,7 +112,7 @@
         }
 
         .footer {
-            z-index: 3;
+            z-index: 2;
             position: absolute;
             bottom: 5%;
             width: 100%;
@@ -122,12 +122,12 @@
 
         .search-line {
             z-index: 3;
-            position: absolute !important;
-            left: 50%;
-            top: 40%;
-            margin-left: -325px !important;
-            margin-top: -100px !important;
-            width: 650px;
+            position: absolute;
+            width: 90%;
+            margin-top: 10%;
+            height: 80%;
+            margin-left: 5%;
+            margin-right: 5%;
         }
 
         .search-line .brand {
@@ -219,8 +219,9 @@
             padding: 2px !important;
         }
 
-        @media only screen and (max-width: 768px) {
-            
+        @media only screen and (max-width: 1200px) {
+
+            .footer,
             .navbar,
             .index-seo {
                 display: none;
@@ -234,12 +235,6 @@
             }
         }
 
-        @media only screen and (max-width: 1400px) {
-            
-            .footer {
-                display: none;
-            }
-        }
 
         ::-webkit-input-placeholder {
             color: #999;
