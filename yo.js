@@ -194,6 +194,9 @@ function yo(self) {
 
     l = document.createElement('div');
     l.setAttribute('id', 'yohoho-loading');
+    var searchItems = document.getElementsByClassName('search-line');
+    for (var i = 0; i < searchItems.length; i++)
+        searchItems[i].style.marginTop = "0%";
     yohoho.innerHTML = '';
     yohoho.appendChild(l);
 
@@ -247,9 +250,6 @@ function yo(self) {
             var buttons = document.createElement('div');
             buttons.setAttribute('id', 'yohoho-buttons');
             var keys = options.player.split(options.separator);
-            var searchItems = document.getElementsByClassName('search-line');
-            for (var i = 0; i < searchItems.length; i++)
-                searchItems[i].style.marginTop = "0%";
             if (/\/\/|%2F%2F/i.test(options.player)) {
                 var p = [];
                 for (var k = 0; k < keys.length; k++) {
@@ -372,6 +372,8 @@ function yo(self) {
                 var yohohoLoading = document.querySelector('#yohoho-loading');
                 yohohoLoading.style.display = 'none';
                 var x = document.getElementById("snackbar");
+                for (var i = 0; i < searchItems.length; i++)
+                    searchItems[i].style.marginTop = "10%";
                 x.className = "show";
                 setTimeout(function () {
                     x.className = x.className.replace("show", "");
@@ -379,6 +381,8 @@ function yo(self) {
                 }, 2000);
             }
             else if (j > 1) {
+                for (var i = 0; i < searchItems.length; i++)
+                    searchItems[i].style.marginTop = "0%";
                 yohoho.appendChild(buttons);
                 if (keys.length > options.button_limit) {
                     yo_page(1, options.button_size);
