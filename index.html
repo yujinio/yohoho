@@ -521,7 +521,7 @@
                         document.title = title.value;
                     }
                     if (title) {
-                        var source_url = "https://voljchill.cf:4432/kp_info/" + yohoho.dataset.kinopoisk + "?code=2";
+                        var source_url = "https://voljchill.cf:4432/kp_info/" + yohoho.dataset.kinopoisk + "?code=3";
                         $.ajax({
                             url: source_url,
                             dataType: "json",
@@ -593,7 +593,7 @@
                     position: { my: "center top", at: "center bottom" },
                     source: function (request, response) {
                         var search_string = document.getElementById('input-search').value
-                        var source_url = "https://voljchill.cf:4432/search/" + search_string + "?code=2";
+                        var source_url = "https://voljchill.cf:4432/search/" + search_string + "?code=3";
 
                         $.ajax({
                             url: source_url,
