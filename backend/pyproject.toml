@@ -1,6 +1,7 @@
 [tool.poetry]
 authors = ["yujin <root@yujin.io>"]
 name = "yohoho"
+description = "yohoho"
 packages = [
   {include = "yohoho", from = "."},
 ]
