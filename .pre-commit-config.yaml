@@ -35,7 +35,7 @@ repos:
     rev: 23.3.0
     hooks:
       - id: black
-        args: [--config=yohoho/pyproject.toml]
+        args: [--config=backend/pyproject.toml]
 
   - repo: https://github.com/adamchainz/blacken-docs
     rev: 1.13.0
