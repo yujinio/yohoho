@@ -1,7 +1,7 @@
 [tool.poetry]
 authors = ["yujin <root@yujin.io>"]
+description = "Yohoho - Это аггрегатор плееров для онлайн просмотра кино по идентификатору Кинопоиска"
 name = "yohoho"
-description = "yohoho"
 packages = [
   {include = "yohoho", from = "."},
 ]
