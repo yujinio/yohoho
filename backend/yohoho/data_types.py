@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 @dataclass
 class SearchOutput:
-    movie_id: str
-    movie_title: str
+    kinopoisk_id: int
+    title: str
 
 
 @dataclass
