@@ -1,19 +1,20 @@
-.tabs>input[type="radio"] {
+.tabs > input[type="radio"] {
   display: none;
 }
 
-.tabs>div {
+.tabs > div {
   display: none;
 }
 
-#tab-btn-1:checked~#content-1,
-#tab-btn-2:checked~#content-2,
-
-.tabs>label {
+#tab-btn-1:checked ~ #content-1,
+#tab-btn-2:checked ~ #content-2,
+.tabs > label {
   display: inline-block;
   user-select: none;
   padding: 2px 18px;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out;
   cursor: pointer;
   position: relative;
   top: 35px;
@@ -24,12 +25,12 @@
   letter-spacing: 0.5px;
 }
 
-.tabs>input[type="radio"]:checked+label {
+.tabs > input[type="radio"]:checked + label {
   background-color: white;
   color: black;
 }
 
-.tabs>input[type="radio"]:checked:after+label {
+.tabs > input[type="radio"]:checked:after + label {
   background-color: black;
   color: white;
 }
