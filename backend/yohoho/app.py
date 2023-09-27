@@ -21,7 +21,7 @@ def report_all_errors(request: Request, exc: Exception) -> Response:
 
 def create_app() -> Litestar:
     if config.SERVER_CACHE_STORE_URL:
-        root_store = redis.RedisStore.with_client()
+        root_store = redis.RedisStore.with_client(url=config.SERVER_CACHE_STORE_URL)
         response_cache_store = root_store.with_namespace("response_cache")
         rate_limit_store = root_store.with_namespace("rate_limit")
     else:
