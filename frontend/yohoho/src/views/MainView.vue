@@ -129,6 +129,10 @@ const getMovieByKinopoiskIdDelayed = async (kinopoiskId: string | number) => {
 
 const updateMovieSearchOptions = async (value: string) => {
   if (movieSearchTimeout.value) clearTimeout(movieSearchTimeout.value)
+  if (value === '' || value === null || value === undefined) {
+    movieSearchLoading.value = false
+    return
+  }
   if (!movieSearchLoading.value) movieSearchLoading.value = true
   movieSearchTimeout.value = setTimeout(async () => {
     movieSearchOptions.value = await getMovieOptions(value)
