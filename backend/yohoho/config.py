@@ -13,3 +13,5 @@ VIDEOCDN_TOKEN = env.str("VIDEOCDN_TOKEN", "token")
 APIVB_TOKEN = env.str("APIVB_TOKEN", "token")
 BAZON_TOKEN = env.str("BAZON_TOKEN", "token")
 ALOHA_TOKEN = env.str("ALOHA_TOKEN", "token")
+
+FRONTEND_URL = env.str("FRONTEND_URL", "http://localhost:5173")

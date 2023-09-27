@@ -1,4 +1,5 @@
 from litestar import Litestar, MediaType, Request, Response, status_codes
+from litestar.config.cors import CORSConfig
 from litestar.config.response_cache import ResponseCacheConfig
 from litestar.middleware.rate_limit import RateLimitConfig
 from litestar.openapi import OpenAPIConfig
@@ -42,4 +43,5 @@ def create_app() -> Litestar:
         response_cache_config=ResponseCacheConfig(
             store=response_cache_store, default_expiration=config.SERVER_CACHE_EXPIRE_SECONDS
         ),
+        cors_config=CORSConfig(allow_origins=[config.FRONTEND_URL]),
     )
