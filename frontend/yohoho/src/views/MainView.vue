@@ -119,7 +119,7 @@ const updateSearchResults = async () => {
   searchTimeout.value = setTimeout(async () => {
     var movies = []
     try {
-      const response = await axios.get(`${BASE_BACKEND_SERVER_URL}/search`, {
+      const response = await axios.get(`${BASE_BACKEND_SERVER_URL}/api/search`, {
         params: { q: searchValue.value }
       })
       movies = response.data
@@ -144,7 +144,7 @@ const updateSearchResults = async () => {
 
 const getIframes = async (kinopoiskId: number) => {
   try {
-    const response = await axios.get(`${BASE_BACKEND_SERVER_URL}/iframes`, {
+    const response = await axios.get(`${BASE_BACKEND_SERVER_URL}/api/iframes`, {
       params: { kinopoisk_id: kinopoiskId }
     })
     return response.data
