@@ -35,6 +35,12 @@ jobs:
         working-directory: ./frontend/yohoho
         run: yarn --frozen-lockfile
 
+      - name: Prepare .env.production file
+        working-directory: ./frontend/yohoho
+        run: echo "VITE_BASE_API_SERVER_URL=$VITE_BASE_API_SERVER_URL" > .env.production
+        env:
+          VITE_BASE_API_SERVER_URL: ${{ secrets.VITE_BASE_API_SERVER_URL }}
+
       - name: Build frontend
         working-directory: ./frontend/yohoho
         run: yarn build
