@@ -4,7 +4,7 @@
       <n-layout-content>
         <n-grid cols="7" item-responsive responsive="screen" x-gap="24" y-gap="24">
           <n-gi span="7 m:5 l:5" offset="0 m:1 l:1">
-            <n-card v-if="iframes.length > 0" id="movieCard">
+            <n-card v-if="iframes.length > 0" closable @close="resetMovieSearch">
               <n-tabs type="segment">
                 <n-tab-pane
                   v-for="iframe in iframes"
@@ -22,27 +22,31 @@
               </n-tabs>
             </n-card>
           </n-gi>
-
           <n-gi span="7 m:5 l:3" offset="0 m:1 l:2">
-            <n-card>
-              <n-grid cols="7" item-responsive responsive="screen" x-gap="12" y-gap="12">
-                <n-gi span="7 m:6 l:6">
+            <n-card v-if="iframes.length === 0">
+              <n-tabs type="segment">
+                <n-tab-pane name="По названию фильма">
                   <n-auto-complete
                     :input-props="{ autocomplete: 'disabled' }"
-                    :options="searchOptions"
-                    :loading="searchOptionsLoading"
-                    placeholder="Название фильма или его ID на Кинопоиске"
-                    v-model:value="searchValue"
+                    :options="movieSearchOptions"
+                    :loading="movieSearchLoading"
+                    placeholder="Как я встретил вашу маму"
+                    v-model:value="movieSearchValue"
                     size="large"
-                    @update:value="updateSearchResults"
-                    @select="setMovieId"
+                    @update:value="updateMovieSearchOptions"
+                    @select="getMovieByKinopoiskId"
                   />
-                </n-gi>
-
-                <n-gi span="2 m:1 l:1" offset="3 m:0 l:0">
-                  <n-button size="large" @click="searchMovie">Поиск</n-button>
-                </n-gi>
-              </n-grid>
+                </n-tab-pane>
+                <n-tab-pane name="По ID на Кинопоиске">
+                  <n-input
+                    :loading="getMovieByKinopoiskIdDelayedLoading"
+                    size="large"
+                    type="text"
+                    placeholder="12345"
+                    @update:value="getMovieByKinopoiskIdDelayed"
+                  />
+                </n-tab-pane>
+              </n-tabs>
             </n-card>
           </n-gi>
         </n-grid>
@@ -61,7 +65,7 @@ import {
   NGi,
   NTabPane,
   NTabs,
-  NButton,
+  NInput,
   useMessage,
   useLoadingBar
 } from 'naive-ui'
@@ -71,74 +75,71 @@ import axios from 'axios'
 const BASE_BACKEND_SERVER_URL = import.meta.env.VITE_BASE_API_SERVER_URL
 
 const iframes = ref([])
-const movieId = ref()
-const searchValue = ref('')
-const searchOptions = ref([])
-const searchOptionsLoading = ref(false)
-const searchTimeout = ref(0)
-const loadingBar = useLoadingBar()
+const getMovieByKinopoiskIdTimeout = ref(0)
+const movieSearchTimeout = ref(0)
+const movieSearchValue = ref('')
+const movieSearchOptions = ref([])
+const movieSearchLoading = ref(false)
+const getMovieByKinopoiskIdDelayedLoading = ref(false)
+const movieLoadingBar = useLoadingBar()
 const message = useMessage()
 
-const searchMovie = async () => {
-  if (searchOptionsLoading.value) searchOptionsLoading.value = false
-  if (movieId.value === '' || movieId.value === null || movieId.value === undefined) {
+const resetMovieSearch = () => {
+  iframes.value = []
+  clearTimeout(movieSearchTimeout.value)
+  movieSearchValue.value = ''
+  movieSearchOptions.value = []
+  movieSearchLoading.value = false
+}
+
+const getMovieByKinopoiskId = async (kinopoiskId: string | number) => {
+  if (kinopoiskId === '' || kinopoiskId === null || kinopoiskId === undefined) {
     message.error(
       'Сперва нужно ввести ID или выбрать фильм из предложенных при автоматическом поиске!',
       { keepAliveOnHover: true, closable: true, duration: 5000 }
     )
     return
   }
-  loadingBar.start()
-  iframes.value = await getIframes(movieId.value)
+
+  if (typeof kinopoiskId === 'string') kinopoiskId = parseInt(kinopoiskId)
+
+  movieLoadingBar.start()
+  iframes.value = await getIframes(kinopoiskId)
   if (iframes.value.length > 0) {
-    loadingBar.finish()
+    movieLoadingBar.finish()
   } else {
     message.error('По вашему запросу ничего не найдено :(', {
       keepAliveOnHover: true,
       closable: true,
       duration: 5000
     })
-    loadingBar.error()
-
-    movieId.value = null
+    movieLoadingBar.error()
   }
 }
 
-const setMovieId = (value: string | number) => {
-  if (searchOptionsLoading.value) searchOptionsLoading.value = false
-  movieId.value = typeof value === 'string' ? parseInt(value) : value
+const getMovieByKinopoiskIdDelayed = async (kinopoiskId: string | number) => {
+  if (getMovieByKinopoiskIdTimeout.value) clearTimeout(getMovieByKinopoiskIdTimeout.value)
+  if (!getMovieByKinopoiskIdDelayedLoading.value) getMovieByKinopoiskIdDelayedLoading.value = true
+
+  getMovieByKinopoiskIdTimeout.value = setTimeout(async () => {
+    await getMovieByKinopoiskId(kinopoiskId)
+    getMovieByKinopoiskIdDelayedLoading.value = false
+  }, 2500)
 }
 
-const updateSearchResults = async () => {
-  if (searchTimeout.value) clearTimeout(searchTimeout.value)
-  if (!isNaN(parseInt(searchValue.value))) {
-    setMovieId(searchValue.value)
-    return
-  }
-  if (!searchOptionsLoading.value) searchOptionsLoading.value = true
-  searchTimeout.value = setTimeout(async () => {
-    var movies = []
-    try {
-      const response = await axios.get(`${BASE_BACKEND_SERVER_URL}/api/search`, {
-        params: { q: searchValue.value }
-      })
-      movies = response.data
-    } catch (error) {
-      console.log(error)
-    }
-    if (movies.length === 0)
+const updateMovieSearchOptions = async (value: string) => {
+  if (movieSearchTimeout.value) clearTimeout(movieSearchTimeout.value)
+  if (!movieSearchLoading.value) movieSearchLoading.value = true
+  movieSearchTimeout.value = setTimeout(async () => {
+    movieSearchOptions.value = await getMovieOptions(value)
+    if (movieSearchOptions.value.length === 0) {
       message.error('По вашему запросу ничего не найдено :(', {
         keepAliveOnHover: true,
         closable: true,
         duration: 5000
       })
-    searchOptions.value = movies.map((movie: { kinopoisk_id: number; title: string }) => {
-      return {
-        label: movie.title,
-        value: movie.kinopoisk_id
-      }
-    })
-    searchOptionsLoading.value = false
+    }
+    movieSearchLoading.value = false
   }, 1500)
 }
 
@@ -148,6 +149,23 @@ const getIframes = async (kinopoiskId: number) => {
       params: { kinopoisk_id: kinopoiskId }
     })
     return response.data
+  } catch (error) {
+    console.log(error)
+  }
+  return []
+}
+
+const getMovieOptions = async (query: string) => {
+  try {
+    const response = await axios.get(`${BASE_BACKEND_SERVER_URL}/api/search`, {
+      params: { q: query }
+    })
+    return response.data.map((movie: { kinopoisk_id: number; title: string }) => {
+      return {
+        label: movie.title,
+        value: movie.kinopoisk_id
+      }
+    })
   } catch (error) {
     console.log(error)
   }
